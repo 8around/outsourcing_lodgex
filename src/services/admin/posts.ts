@@ -382,6 +382,23 @@ export class PostsService {
     }
   }
 
+  // 카테고리에 속한 게시글 수 조회
+  async getPostsCountByCategory(categoryId: string): Promise<number> {
+    try {
+      const { count, error } = await this.supabase
+        .from('posts')
+        .select('*', { count: 'exact', head: true })
+        .eq('category_id', categoryId)
+
+      if (error) throw error
+
+      return count || 0
+    } catch (error) {
+      console.error('Error fetching posts count by category:', error)
+      throw error
+    }
+  }
+
   // 카테고리 삭제
   async deleteCategory(id: string): Promise<void> {
     try {

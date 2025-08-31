@@ -725,9 +725,19 @@ function CategoryModal({ postType, categories, onClose }: {
 
   // 카테고리 삭제
   const handleDeleteCategory = async (id: string) => {
-    if (!confirm('이 카테고리를 삭제하시겠습니까?')) return;
-
     try {
+      // 카테고리에 속한 게시글 수 확인
+      const postsCount = await postsService.getPostsCountByCategory(id);
+      
+      if (postsCount > 0) {
+        // 게시글이 있으면 경고 메시지 표시
+        alert('카테고리에 게시된 게시글을 삭제 후에 카테고리 삭제가 가능합니다.');
+        return;
+      }
+      
+      // 게시글이 없으면 삭제 확인
+      if (!confirm('이 카테고리를 삭제하시겠습니까?')) return;
+
       await postsService.deleteCategory(id);
       setCategoryList(categoryList.filter(cat => cat.id !== id));
     } catch (error) {
