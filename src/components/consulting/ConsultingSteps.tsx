@@ -76,7 +76,7 @@ export function ConsultingSteps({ steps, className }: ConsultingStepsProps) {
             전문 컨설턴트와 함께 호텔 운영의 새로운 전환점을 만들어보세요.
           </p>
           <a
-            href="#consulting-form"
+            href="/contact"
             className="inline-flex items-center px-8 py-3 bg-primary text-white font-medium rounded-lg hover:bg-primary-800 transition-colors duration-200"
           >
             컨설팅 신청하기

@@ -105,7 +105,7 @@ export function ServiceCategories({
                 알아보고 싶으신가요?
               </p>
               <a
-                href="#consulting-form"
+                href="/contact"
                 className="inline-flex items-center px-6 py-2 bg-accent text-white font-medium rounded-lg hover:bg-accent-600 transition-colors duration-200"
               >
                 상담 신청하기
