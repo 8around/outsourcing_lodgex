@@ -1,0 +1,22 @@
+# Browsers that we support
+
+# Production
+> 1%
+last 2 versions
+not dead
+not ie 11
+
+# Development
+last 1 chrome version
+last 1 firefox version
+last 1 safari version
+
+# Mobile
+iOS >= 12
+Android >= 6
+
+# Specific regions (Korea)
+last 2 chrome versions
+last 2 firefox versions
+last 2 safari versions
+last 2 edge versions
