@@ -13,7 +13,6 @@ interface ContactPageProps {
 export function ContactPage({ className }: ContactPageProps) {
   const handleFormSubmit = (data: ConsultingFormType) => {
     // TODO: API 호출 로직 구현
-    console.log('Consulting form submitted:', data);
   };
 
   return (

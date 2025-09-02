@@ -8,11 +8,11 @@ const footerData = {
     { name: '인사이트', href: '/insights' },
     { name: '이벤트', href: '/events' },
     { name: '고객후기', href: '/testimonials' },
-    { name: '문의하기', href: '/services#consulting-form' },
+    { name: '문의하기', href: '/contact' },
   ],
   contact: {
-    phone: '02-1234-5678',
-    email: 'contact@lodgex.com',
+    phone: '080-727-8899',
+    email: 'sjds77@naver.com',
   },
   philosophy: '최고 수준의 호스피탈리티로 고객의 성공을 지원하며, 혁신적인 솔루션을 통해 호텔 업계의 새로운 기준을 제시합니다.',
 };

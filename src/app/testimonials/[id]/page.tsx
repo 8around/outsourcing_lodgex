@@ -46,7 +46,6 @@ export default function TestimonialDetailPage() {
         setPost(postData);
         setRelatedPosts(relatedPostsData);
       } catch (error) {
-        console.error('게시글 로드 실패:', error);
         setNotFound(true);
       } finally {
         setLoading(false);

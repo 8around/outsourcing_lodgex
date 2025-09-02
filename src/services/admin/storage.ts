@@ -52,7 +52,6 @@ export class StorageService {
         })
 
       if (error) {
-        console.error('Upload error:', error)
         throw new Error(`파일 업로드 실패: ${error.message}`)
       }
 
@@ -69,7 +68,6 @@ export class StorageService {
         type: file.type
       }
     } catch (error) {
-      console.error('Error uploading file:', error)
       throw error
     }
   }
@@ -150,12 +148,11 @@ export class StorageService {
       })
 
       if (failed.length > 0) {
-        console.warn('Some files failed to upload:', failed)
+        // Some files failed to upload
       }
 
       return successful
     } catch (error) {
-      console.error('Error uploading multiple files:', error)
       throw error
     }
   }
@@ -169,7 +166,6 @@ export class StorageService {
 
       if (error) throw error
     } catch (error) {
-      console.error('Error deleting file:', error)
       throw error
     }
   }
@@ -198,7 +194,6 @@ export class StorageService {
 
       return data.signedUrl
     } catch (error) {
-      console.error('Error creating signed URL:', error)
       throw error
     }
   }
@@ -323,7 +318,6 @@ export class StorageService {
         if (createError) throw createError
       }
     } catch (error) {
-      console.error('Error ensuring bucket exists:', error)
       throw error
     }
   }
@@ -351,7 +345,6 @@ export class StorageService {
 
       return data || []
     } catch (error) {
-      console.error('Error listing files:', error)
       throw error
     }
   }

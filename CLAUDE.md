@@ -21,22 +21,35 @@
 ## 인증 시스템 (중요)
 
 ### 인증 방식
-- **Supabase Auth를 사용하지 않음**
-  - 자체 토큰 시스템 사용 (localStorage에 adminSession 저장)
-  - admins 테이블과 verify_admin_password RPC 함수로 인증
-  - 세션 만료 시간: 24시간
+- **Supabase Auth 사용**
+  - Supabase Auth의 이메일/비밀번호 인증 사용
+  - admins 테이블의 auth_user_id로 Supabase Auth 사용자와 연결
+  - 세션은 Supabase Auth가 자동 관리
 
 ### Supabase 클라이언트 설정
-- **ANON KEY 사용**
+- **인증 기반 접근 제어**
   - createClient()는 NEXT_PUBLIC_SUPABASE_ANON_KEY를 사용
-  - RLS 정책은 'anon' 역할 기준으로 설정되어야 함
-  - 'authenticated' 역할 정책은 작동하지 않음
+  - RLS 정책은 'authenticated' 역할 기준으로 설정
+  - public.is_admin() 함수로 관리자 권한 확인
+
+### RLS 정책
+- **읽기 권한**
+  - categories: 활성 카테고리는 모두 조회 가능
+  - posts: 게시된 포스트는 모두 조회 가능, 관리자는 draft도 조회 가능
+  - service_requests: 관리자만 조회 가능
+  - admins: 관리자만 조회 가능
+
+- **쓰기 권한 (INSERT/UPDATE/DELETE)**
+  - categories: 관리자만 가능
+  - posts: 관리자만 가능
+  - service_requests: INSERT는 모두 가능, UPDATE/DELETE는 관리자만
+  - admins: 관리자만 UPDATE 가능
 
 ### Storage RLS 정책
 - **images 버킷**
   - SELECT: 모든 사용자 허용 (공개 버킷)
-  - INSERT/UPDATE/DELETE: anon 역할 허용
-  - 주의: auth.uid()나 auth.role() 함수 사용 불가
+  - INSERT/UPDATE/DELETE: authenticated 역할 + is_admin() 확인 필요
+  - auth.uid()와 auth.role() 함수 사용 가능
 
 ## 데이터베이스 관리 규칙
 

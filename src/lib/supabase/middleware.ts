@@ -61,7 +61,6 @@ export async function updateSession(request: NextRequest) {
 
       // users 테이블이 없거나 is_admin 필드가 없는 경우는 통과
       if (error) {
-        console.warn('Admin check error:', error.message)
         // 테이블이 없는 경우 일단 통과시킴 (개발 환경)
         if (!error.message.includes('relation') && !error.message.includes('column')) {
           url.pathname = '/admin/login'
@@ -75,7 +74,6 @@ export async function updateSession(request: NextRequest) {
         return NextResponse.redirect(url)
       }
     } catch (error) {
-      console.error('Admin middleware error:', error)
       // 심각한 에러가 아니면 통과
     }
   }

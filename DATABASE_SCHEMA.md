@@ -11,14 +11,20 @@
 
 ### 1. admins (관리자 테이블)
 ```sql
--- 자체 인증 시스템 사용 (Supabase Auth 미사용)
+-- Supabase Auth와 연동된 관리자 테이블
 CREATE TABLE admins (
   id SERIAL PRIMARY KEY,                    -- 관리자 고유 식별자 (자동 증가 정수)
-  login_id TEXT NOT NULL UNIQUE,            -- 관리자 로그인 아이디, 중복 불가능한 고유값
-  password TEXT NOT NULL,                   -- bcrypt로 해시화된 관리자 비밀번호 저장
+  login_id TEXT NOT NULL UNIQUE,            -- 관리자 로그인 아이디 (이메일)
+  password TEXT NOT NULL,                   -- 레거시 비밀번호 (사용 안 함)
+  auth_user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,  -- Supabase Auth 사용자 ID
+  email TEXT UNIQUE,                        -- 관리자 이메일 주소
   last_login_at TIMESTAMPTZ,                -- 마지막 로그인 시간, 관리자 활동 추적용
   created_at TIMESTAMPTZ DEFAULT NOW()       -- 관리자 계정 생성 일시
 );
+
+-- 인덱스
+CREATE INDEX idx_admins_auth_user_id ON admins(auth_user_id);
+CREATE INDEX idx_admins_email ON admins(email);
 ```
 
 ### 2. categories (카테고리 테이블)
@@ -127,74 +133,77 @@ CREATE INDEX idx_service_requests_created ON service_requests(created_at DESC);
 
 ### admins 테이블
 ```sql
--- 로그인 확인용 읽기 허용
-CREATE POLICY "Allow read for login" 
+-- RLS 활성화
+ALTER TABLE admins ENABLE ROW LEVEL SECURITY;
+
+-- 관리자만 admins 테이블 조회 가능
+CREATE POLICY "Admins can view admin users" 
   ON admins FOR SELECT 
-  TO public 
-  USING (true);
+  TO authenticated
+  USING (public.is_admin());
+
+-- 관리자만 admins 테이블 수정 가능
+CREATE POLICY "Admins can update admin users" 
+  ON admins FOR UPDATE 
+  TO authenticated
+  USING (public.is_admin())
+  WITH CHECK (public.is_admin());
 ```
 
 ### categories 테이블
 ```sql
--- 활성화된 카테고리 조회 (public, anon 모두 가능)
-CREATE POLICY "Active categories are viewable by everyone" 
+-- 모든 사용자가 활성 카테고리 조회 가능
+CREATE POLICY "Anyone can view active categories" 
   ON categories FOR SELECT 
-  TO public 
   USING (is_active = true);
 
-CREATE POLICY "Public can view active categories" 
-  ON categories FOR SELECT 
-  TO public 
-  USING (is_active = true);
-
--- 현재 anon 역할도 수정 가능 (보안 검토 필요)
-CREATE POLICY "Enable insert for all users" 
+-- 관리자만 카테고리 생성/수정/삭제 가능
+CREATE POLICY "Admins can insert categories" 
   ON categories FOR INSERT 
-  TO anon, authenticated 
-  WITH CHECK (true);
+  TO authenticated
+  WITH CHECK (public.is_admin());
 
-CREATE POLICY "Enable update for all users" 
+CREATE POLICY "Admins can update categories" 
   ON categories FOR UPDATE 
-  TO anon, authenticated 
-  USING (true) 
-  WITH CHECK (true);
+  TO authenticated
+  USING (public.is_admin())
+  WITH CHECK (public.is_admin());
 
-CREATE POLICY "Enable delete for all users" 
+CREATE POLICY "Admins can delete categories" 
   ON categories FOR DELETE 
-  TO anon, authenticated 
-  USING (true);
+  TO authenticated
+  USING (public.is_admin());
 ```
 
 ### posts 테이블
 ```sql
--- 공개된 게시물 조회
-CREATE POLICY "Enable read for published posts" 
+-- 모든 사용자가 게시된 포스트 조회 가능
+CREATE POLICY "Anyone can view published posts" 
   ON posts FOR SELECT 
-  TO public 
   USING (status = 'published');
 
--- anon 역할도 모든 게시물 조회 가능
-CREATE POLICY "Enable select for all users" 
+-- 관리자는 모든 포스트 조회 가능 (draft 포함)
+CREATE POLICY "Admins can view all posts" 
   ON posts FOR SELECT 
-  TO anon, authenticated 
-  USING (true);
+  TO authenticated
+  USING (public.is_admin());
 
--- 현재 anon 역할도 수정 가능 (보안 검토 필요)
-CREATE POLICY "Enable insert for all users" 
+-- 관리자만 포스트 생성/수정/삭제 가능
+CREATE POLICY "Admins can insert posts" 
   ON posts FOR INSERT 
-  TO anon, authenticated 
-  WITH CHECK (true);
+  TO authenticated
+  WITH CHECK (public.is_admin());
 
-CREATE POLICY "Enable update for all users" 
+CREATE POLICY "Admins can update posts" 
   ON posts FOR UPDATE 
-  TO anon, authenticated 
-  USING (true) 
-  WITH CHECK (true);
+  TO authenticated
+  USING (public.is_admin())
+  WITH CHECK (public.is_admin());
 
-CREATE POLICY "Enable delete for all users" 
+CREATE POLICY "Admins can delete posts" 
   ON posts FOR DELETE 
-  TO anon, authenticated 
-  USING (true);
+  TO authenticated
+  USING (public.is_admin());
 ```
 
 ### service_requests 테이블
@@ -202,29 +211,24 @@ CREATE POLICY "Enable delete for all users"
 -- 누구나 서비스 요청 생성 가능
 CREATE POLICY "Anyone can create service requests" 
   ON service_requests FOR INSERT 
-  TO public 
   WITH CHECK (true);
 
-CREATE POLICY "Public can insert service requests" 
-  ON service_requests FOR INSERT 
-  TO public 
-  WITH CHECK (true);
-
--- 인증된 사용자만 조회/수정/삭제
-CREATE POLICY "Authenticated can view all service requests" 
+-- 관리자만 서비스 요청 조회/수정/삭제 가능
+CREATE POLICY "Admins can view service requests" 
   ON service_requests FOR SELECT 
-  TO authenticated 
-  USING (true);
+  TO authenticated
+  USING (public.is_admin());
 
-CREATE POLICY "Authenticated can update service requests" 
+CREATE POLICY "Admins can update service requests" 
   ON service_requests FOR UPDATE 
-  TO authenticated 
-  USING (true);
+  TO authenticated
+  USING (public.is_admin())
+  WITH CHECK (public.is_admin());
 
-CREATE POLICY "Authenticated can delete service requests" 
+CREATE POLICY "Admins can delete service requests" 
   ON service_requests FOR DELETE 
-  TO authenticated 
-  USING (true);
+  TO authenticated
+  USING (public.is_admin());
 ```
 
 ## 🔄 트리거 및 함수
@@ -250,30 +254,16 @@ CREATE TRIGGER update_service_requests_updated_at BEFORE UPDATE ON service_reque
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 ```
 
-### 관리자 비밀번호 검증 함수
+### 관리자 확인 함수
 ```sql
--- 자체 인증 시스템용 비밀번호 검증 함수
-CREATE OR REPLACE FUNCTION verify_admin_password(
-  p_login_id TEXT,
-  p_password TEXT
-) RETURNS TABLE (
-  id INTEGER,
-  login_id TEXT,
-  last_login_at TIMESTAMPTZ
-) AS $$
+-- Supabase Auth 사용자가 관리자인지 확인하는 함수
+CREATE OR REPLACE FUNCTION public.is_admin()
+RETURNS BOOLEAN AS $$
 BEGIN
-  RETURN QUERY
-  SELECT a.id, a.login_id, a.last_login_at
-  FROM admins a
-  WHERE a.login_id = p_login_id
-    AND a.password = crypt(p_password, a.password);
-    
-  -- 로그인 성공 시 last_login_at 업데이트
-  IF FOUND THEN
-    UPDATE admins 
-    SET last_login_at = NOW()
-    WHERE admins.login_id = p_login_id;
-  END IF;
+  RETURN EXISTS (
+    SELECT 1 FROM public.admins 
+    WHERE auth_user_id = auth.uid()
+  );
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 ```

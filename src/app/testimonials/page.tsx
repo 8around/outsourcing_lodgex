@@ -23,7 +23,7 @@ export default function TestimonialsPage() {
     query: '',
     category: 'all',
     page: 1,
-    sortBy: 'date',
+    sortBy: 'date' as 'date' | 'views' | 'title',
     sortOrder: 'desc' as 'asc' | 'desc'
   });
 
@@ -66,7 +66,6 @@ export default function TestimonialsPage() {
     } catch (error: any) {
       // AbortError는 무시 (정상적인 취소)
       if (error?.name !== 'AbortError') {
-        console.error('데이터 로드 실패:', error);
       }
     } finally {
       isLoadingRef.current = false;

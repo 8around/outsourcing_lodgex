@@ -164,7 +164,6 @@ export function ContactForm({ className, onSubmit }: ContactFormProps) {
       });
       setUploadedFile(null);
     } catch (error) {
-      console.error('Form submission error:', error);
       alert(error instanceof Error ? error.message : '신청 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
     } finally {
       setIsSubmitting(false);

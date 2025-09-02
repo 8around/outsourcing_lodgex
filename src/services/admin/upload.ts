@@ -20,7 +20,6 @@ export class UploadService {
         });
 
       if (error) {
-        console.error('Upload error:', error);
         return null;
       }
 
@@ -31,7 +30,6 @@ export class UploadService {
 
       return publicUrl;
     } catch (error) {
-      console.error('Error uploading image:', error);
       return null;
     }
   }
@@ -49,13 +47,11 @@ export class UploadService {
         .remove([filePath]);
 
       if (error) {
-        console.error('Delete error:', error);
         return false;
       }
 
       return true;
     } catch (error) {
-      console.error('Error deleting image:', error);
       return false;
     }
   }

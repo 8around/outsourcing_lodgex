@@ -62,7 +62,7 @@ export async function isServerAdmin() {
     const { data: adminData, error } = await supabase
       .from('admins')
       .select('id')
-      .eq('id', user.id)
+      .eq('auth_user_id', user.id)
       .single()
 
     if (error || !adminData) return false
@@ -102,7 +102,7 @@ export async function getServerAdminInfo() {
     const { data: adminData, error } = await supabase
       .from('admins')
       .select('*')
-      .eq('id', user.id)
+      .eq('auth_user_id', user.id)
       .single()
 
     if (error || !adminData) return null

@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 
 export default function LoginForm() {
-  const [loginId, setLoginId] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
@@ -19,27 +19,35 @@ export default function LoginForm() {
     setIsLoading(true);
 
     try {
-      // 아이디 체크
-      const { data, error } = await supabase
-        .from('admins')
-        .select('id, login_id')
-        .eq('login_id', loginId)
-        .single();
+      // Supabase Auth로 로그인
+      const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+        email,
+        password
+      });
 
-      if (error || !data) {
-        setError('아이디 또는 비밀번호가 올바르지 않습니다.');
+      if (authError) {
+        setError('이메일 또는 비밀번호가 올바르지 않습니다.');
         setIsLoading(false);
         return;
       }
 
-      // 비밀번호 체크
-      const { data: authData, error: authError } = await supabase.rpc('verify_admin_password', {
-        admin_login_id: loginId,
-        admin_password: password
-      });
+      if (!authData?.user) {
+        setError('로그인에 실패했습니다.');
+        setIsLoading(false);
+        return;
+      }
 
-      if (authError || !authData) {
-        setError('아이디 또는 비밀번호가 올바르지 않습니다.');
+      // 관리자 권한 확인
+      const { data: adminData, error: adminError } = await supabase
+        .from('admins')
+        .select('id, email, auth_user_id')
+        .eq('auth_user_id', authData.user.id)
+        .single();
+
+      if (adminError || !adminData) {
+        // 관리자가 아니면 로그아웃
+        await supabase.auth.signOut();
+        setError('관리자 권한이 없습니다.');
         setIsLoading(false);
         return;
       }
@@ -48,21 +56,7 @@ export default function LoginForm() {
       await supabase
         .from('admins')
         .update({ last_login_at: new Date().toISOString() })
-        .eq('id', data.id);
-
-      // 세션 저장
-      localStorage.setItem('adminSession', JSON.stringify({
-        id: data.id,
-        loginId: data.login_id,
-        loginAt: new Date().toISOString()
-      }));
-
-      // 쿠키에도 세션 저장 (미들웨어에서 체크하기 위해)
-      document.cookie = `adminSession=${JSON.stringify({
-        id: data.id,
-        loginId: data.login_id,
-        loginAt: new Date().toISOString()
-      })}; path=/; max-age=${24 * 60 * 60}`; // 24시간
+        .eq('id', adminData.id);
 
       // 로딩 상태 해제
       setIsLoading(false);
@@ -72,40 +66,40 @@ export default function LoginForm() {
       router.refresh();
     } catch (err) {
       setError('로그인 중 오류가 발생했습니다.');
-      console.error('Login error:', err);
+      // Login error
       setIsLoading(false);
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      {/* 아이디 입력 */}
+      {/* 이메일 입력 */}
       <div className="space-y-2">
-        <label htmlFor="loginId" className="block text-sm font-semibold text-white/90">
-          관리자 아이디
+        <label htmlFor="email" className="block text-sm font-semibold text-white/90">
+          관리자 이메일
         </label>
         <div className="relative group">
           <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
             <svg className="h-5 w-5 text-white/40 group-focus-within:text-[#D4B98B] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
             </svg>
           </div>
           <input
-            id="loginId"
-            name="loginId"
-            type="text"
-            value={loginId}
-            onChange={(e) => setLoginId(e.target.value)}
+            id="email"
+            name="email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="block w-full pl-12 pr-4 py-4 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl 
                      text-white placeholder-white/40 text-lg font-medium
                      focus:outline-none focus:ring-2 focus:ring-[#D4B98B]/50 focus:border-[#D4B98B]/50
                      hover:border-white/20 hover:bg-white/10
                      disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-white/10 disabled:hover:bg-white/5
                      transition-all duration-300"
-            placeholder="관리자 아이디를 입력하세요"
+            placeholder="관리자 이메일을 입력하세요"
             required
             disabled={isLoading}
-            autoComplete="username"
+            autoComplete="email"
           />
           <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-[#D4B98B]/5 to-transparent opacity-0 group-focus-within:opacity-100 transition-opacity pointer-events-none"></div>
         </div>

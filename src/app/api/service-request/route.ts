@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@supabase/supabase-js";
+import { randomUUID } from "crypto";
 import {
   sendServiceRequestEmails,
   checkRateLimit,
@@ -82,22 +83,16 @@ export async function POST(request: NextRequest) {
     //   );
     // }
 
-    // Supabase 클라이언트 생성 - anon key 직접 사용
-    const { createClient: createSupabaseClient } = await import(
-      "@supabase/supabase-js"
-    );
-
-    const supabase = createSupabaseClient(
+    // Supabase 클라이언트 생성 - anon key 사용
+    const supabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
     );
 
-    // 현재 역할 확인
-    const { data: roleData, error: roleError } =
-      await supabase.rpc("current_role");
-
     // 데이터베이스에 서비스 신청 정보 저장
+    const requestId = randomUUID();
     const serviceRequestData = {
+      id: requestId,
       company_name: companyName,
       company_type: "hotel", // 기본값 설정
       contact_person: contactName,
@@ -112,14 +107,12 @@ export async function POST(request: NextRequest) {
       status: "pending",
     };
 
-    const { data: insertData, error: insertError } = await supabase
+    const { error: insertError } = await supabase
       .from("service_requests")
-      .insert([serviceRequestData])
-      .select()
-      .single();
+      .insert([serviceRequestData]);
 
     if (insertError) {
-      console.error("Database insert error:", insertError);
+      // Database insert error
       return NextResponse.json(
         {
           success: false,
@@ -146,19 +139,15 @@ export async function POST(request: NextRequest) {
       await sendServiceRequestEmails(emailData);
 
     // 이메일 발송 결과 로깅
-    console.log("Email sending results:", {
-      admin: adminResult,
-      client: clientResult,
-      requestId: insertData.id,
-    });
+    // Email sending results
 
     // 응답 데이터 준비
     const response = {
       success: true,
       message: "컨설팅 신청이 성공적으로 접수되었습니다.",
       data: {
-        requestId: insertData.id,
-        submittedAt: insertData.created_at,
+        requestId,
+        submittedAt: new Date().toISOString(),
       },
       emailStatus: {
         adminNotificationSent: adminResult.success,
@@ -171,15 +160,12 @@ export async function POST(request: NextRequest) {
     if (!adminResult.success || !clientResult.success) {
       response.message =
         "신청은 접수되었지만 일부 이메일 발송에 실패했습니다. 담당자가 직접 연락드리겠습니다.";
-      console.warn("Some emails failed to send:", {
-        adminError: adminResult.error,
-        clientError: clientResult.error,
-      });
+      // Some emails failed to send
     }
 
     return NextResponse.json(response, { status: 200 });
   } catch (error) {
-    console.error("Service request API error:", error);
+    // Service request API error
 
     return NextResponse.json(
       {
@@ -200,7 +186,10 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get("limit") || "10");
     const status = searchParams.get("status");
 
-    const supabase = await createClient();
+    const { createClient: createServerClient } = await import(
+      "@/lib/supabase/server"
+    );
+    const supabase = await createServerClient();
 
     // 인증된 관리자인지 확인
     const {
@@ -215,14 +204,14 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // 관리자 권한 확인
-    const { data: userData, error: userError } = await supabase
-      .from("users")
-      .select("is_admin")
-      .eq("id", user.id)
+    // 관리자 권한 확인 (admins.auth_user_id 기준)
+    const { data: adminData, error: adminError } = await supabase
+      .from("admins")
+      .select("id")
+      .eq("auth_user_id", user.id)
       .single();
 
-    if (userError || !userData?.is_admin) {
+    if (adminError || !adminData) {
       return NextResponse.json(
         { success: false, message: "관리자 권한이 필요합니다." },
         { status: 403 }
@@ -246,7 +235,7 @@ export async function GET(request: NextRequest) {
     const { data, error, count } = await query;
 
     if (error) {
-      console.error("Failed to fetch service requests:", error);
+      // Failed to fetch service requests
       return NextResponse.json(
         { success: false, message: "데이터를 가져오는데 실패했습니다." },
         { status: 500 }
@@ -264,7 +253,7 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
-    console.error("Service request GET API error:", error);
+    // Service request GET API error
 
     return NextResponse.json(
       { success: false, message: "서버 오류가 발생했습니다." },
