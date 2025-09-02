@@ -57,9 +57,8 @@ export default function ServiceRequestsPage() {
           throw error
         }
         
-        setRequests(data || [])
+        setRequests(data as any || [])
       } catch (error) {
-        console.error('Failed to fetch service requests:', error)
         setError('데이터를 불러오는데 실패했습니다.')
       } finally {
         setLoading(false)
@@ -110,7 +109,6 @@ export default function ServiceRequestsPage() {
       setSelectedRequest({ ...selectedRequest, status: modalTempStatus })
       setModalTempStatus(null)
     } catch (error) {
-      console.error('Failed to update status:', error)
       setError('상태 변경에 실패했습니다.')
     } finally {
       setModalSaving(false)
@@ -143,8 +141,8 @@ export default function ServiceRequestsPage() {
       return matchesSearch && matchesStatus && matchesServiceType
     })
     .sort((a, b) => {
-      const aValue = a[sortField as keyof ServiceRequest]
-      const bValue = b[sortField as keyof ServiceRequest]
+      const aValue = a[sortField as keyof ServiceRequest] as any
+      const bValue = b[sortField as keyof ServiceRequest] as any
       
       if (sortDirection === 'asc') {
         return aValue > bValue ? 1 : -1

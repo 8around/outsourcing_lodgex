@@ -47,7 +47,7 @@ export default function InsightsPage() {
       const statsData = await postsService.getPostStats('insights');
       setStats(statsData);
     } catch (error) {
-      console.error('Error fetching posts:', error);
+      // Error handled silently
     } finally {
       setLoading(false);
     }
@@ -59,7 +59,7 @@ export default function InsightsPage() {
       const data = await postsService.getCategories('insights');
       setCategories(data);
     } catch (error) {
-      console.error('Error fetching categories:', error);
+      // Error handled silently
     }
   };
 
@@ -89,7 +89,6 @@ export default function InsightsPage() {
       await postsService.deletePost(id);
       fetchPosts();
     } catch (error) {
-      console.error('Error deleting post:', error);
       alert('삭제 중 오류가 발생했습니다.');
     }
   };
@@ -118,13 +117,21 @@ export default function InsightsPage() {
         <div className="flex gap-3">
           <button
             onClick={() => setShowCategoryModal(true)}
+            data-category-modal-trigger
             className="px-4 py-2 bg-gray-100 text-gray-800 font-medium rounded-lg hover:bg-gray-200 transition-colors flex items-center gap-2"
           >
             <FolderOpen className="w-4 h-4" />
             카테고리 관리
           </button>
           <button
-            onClick={() => setShowCreateModal(true)}
+            onClick={() => {
+              if (categories.length === 0) {
+                alert('먼저 카테고리를 등록해주세요.\n카테고리 관리 버튼을 클릭하여 카테고리를 추가한 후 글을 작성할 수 있습니다.');
+                setShowCategoryModal(true);
+              } else {
+                setShowCreateModal(true);
+              }
+            }}
             className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center gap-2"
           >
             <Plus className="w-4 h-4" />
@@ -408,14 +415,22 @@ function PostFormModal({ post, categories, onClose }: {
   categories: Category[];
   onClose: () => void;
 }) {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    title: string;
+    content: string;
+    excerpt: string;
+    image_url: string;
+    category_id: string;
+    tags: string[];
+    status: 'draft' | 'published';
+  }>({
     title: post?.title || '',
     content: post?.content || '',
     excerpt: post?.excerpt || '',
     image_url: post?.image_url || '',
     category_id: post?.category_id || '',
     tags: post?.tags || [],
-    status: post?.status || 'draft',
+    status: (post?.status as 'draft' | 'published') || 'draft',
   });
   const [tagInput, setTagInput] = useState('');
   const [saving, setSaving] = useState(false);
@@ -425,6 +440,13 @@ function PostFormModal({ post, categories, onClose }: {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // 카테고리 검증
+    if (!formData.category_id) {
+      alert('카테고리를 선택해주세요.');
+      return;
+    }
+    
     setSaving(true);
 
     try {
@@ -454,7 +476,6 @@ function PostFormModal({ post, categories, onClose }: {
       }
       onClose();
     } catch (error) {
-      console.error('Error saving post:', error);
       alert('저장 중 오류가 발생했습니다.');
     } finally {
       setSaving(false);
@@ -522,18 +543,38 @@ function PostFormModal({ post, categories, onClose }: {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                카테고리
+                카테고리 *
               </label>
-              <select
-                value={formData.category_id}
-                onChange={(e) => setFormData({ ...formData, category_id: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="">카테고리 선택</option>
-                {categories.map(cat => (
-                  <option key={cat.id} value={cat.id}>{cat.name}</option>
-                ))}
-              </select>
+              {categories.length === 0 ? (
+                <div className="p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                  <p className="text-sm text-yellow-800">
+                    등록된 카테고리가 없습니다.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onClose();
+                      // 부모 컴포넌트의 카테고리 모달 열기
+                      document.querySelector<HTMLButtonElement>('[data-category-modal-trigger]')?.click();
+                    }}
+                    className="mt-2 text-sm text-yellow-700 underline hover:text-yellow-900"
+                  >
+                    카테고리 관리로 이동하여 카테고리를 등록하세요
+                  </button>
+                </div>
+              ) : (
+                <select
+                  value={formData.category_id}
+                  onChange={(e) => setFormData({ ...formData, category_id: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  required
+                >
+                  <option value="">카테고리를 선택하세요</option>
+                  {categories.map(cat => (
+                    <option key={cat.id} value={cat.id}>{cat.name}</option>
+                  ))}
+                </select>
+              )}
             </div>
 
             <div>
@@ -703,7 +744,6 @@ function CategoryModal({ postType, categories, onClose }: {
       setCategoryList([...categoryList, newCategory]);
       setNewCategoryName('');
     } catch (error) {
-      console.error('Error creating category:', error);
       alert('카테고리 추가 중 오류가 발생했습니다.');
     }
   };
@@ -718,7 +758,6 @@ function CategoryModal({ postType, categories, onClose }: {
       setEditingCategory(null);
       setEditingName('');
     } catch (error) {
-      console.error('Error updating category:', error);
       alert('카테고리 수정 중 오류가 발생했습니다.');
     }
   };
@@ -741,7 +780,6 @@ function CategoryModal({ postType, categories, onClose }: {
       await postsService.deleteCategory(id);
       setCategoryList(categoryList.filter(cat => cat.id !== id));
     } catch (error) {
-      console.error('Error deleting category:', error);
       alert('카테고리 삭제 중 오류가 발생했습니다.');
     }
   };

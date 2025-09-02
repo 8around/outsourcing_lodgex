@@ -58,17 +58,17 @@ export class FrontendPostsService {
         title: post.title,
         content: post.content,
         excerpt: post.excerpt || '',
-        author: post.author,
+        author: 'Lodgex Hotel',
         date: post.date.split('T')[0], // YYYY-MM-DD 형태로 변환
         category: post.category_name || '',
         imageUrl: post.image_url || '/images/placeholder.jpg',
         views: post.views,
         tags: post.tags || [],
         // 고객 후기 전용 필드
-        clientName: post.client_name,
-        clientCompany: post.client_company,
-        clientPosition: post.client_position,
-        rating: post.rating
+        clientName: post.client_name || undefined,
+        clientCompany: post.client_company || undefined,
+        clientPosition: post.client_position || undefined,
+        rating: post.rating || undefined
       }))
 
       return {
@@ -78,7 +78,6 @@ export class FrontendPostsService {
         currentPage: response.page
       }
     } catch (error) {
-      console.error('Error fetching posts:', error)
       return {
         posts: [],
         total: 0,
@@ -103,22 +102,21 @@ export class FrontendPostsService {
         title: post.title,
         content: post.content,
         excerpt: post.excerpt || '',
-        author: post.author,
+        author: 'Lodgex Hotel',
         date: post.date.split('T')[0],
         category: post.category_name || '',
         imageUrl: post.image_url || '/images/placeholder.jpg',
         views: post.views + 1, // 조회수 증가 반영
         tags: post.tags || [],
         // 고객 후기 전용 필드
-        clientName: post.client_name,
-        clientCompany: post.client_company,
-        clientPosition: post.client_position,
-        rating: post.rating
+        clientName: post.client_name || undefined,
+        clientCompany: post.client_company || undefined,
+        clientPosition: post.client_position || undefined,
+        rating: post.rating || undefined
       }
 
       return boardPost
     } catch (error) {
-      console.error('Error fetching post:', error)
       return null
     }
   }
@@ -163,7 +161,6 @@ export class FrontendPostsService {
 
       return boardCategories
     } catch (error) {
-      console.error('Error fetching categories:', error)
       return [{ id: 'all', name: '전체', postCount: 0 }]
     }
   }
@@ -183,7 +180,7 @@ export class FrontendPostsService {
         title: post.title,
         content: post.content,
         excerpt: post.excerpt || '',
-        author: post.author,
+        author: 'Lodgex Hotel',
         date: post.date.split('T')[0],
         category: post.category_name || '',
         imageUrl: post.image_url || '/images/placeholder.jpg',
@@ -193,7 +190,6 @@ export class FrontendPostsService {
 
       return posts
     } catch (error) {
-      console.error('Error fetching related posts:', error)
       return []
     }
   }
@@ -212,20 +208,19 @@ export class FrontendPostsService {
         title: post.title,
         content: post.content,
         excerpt: post.excerpt || '',
-        author: post.author,
+        author: 'Lodgex Hotel',
         date: post.date.split('T')[0],
         category: post.category_name || '',
         imageUrl: post.image_url || '/images/placeholder.jpg',
         views: post.views,
         tags: post.tags || [],
         // 고객 후기 전용 필드
-        rating: post.rating,
-        clientCompany: post.client_company
+        rating: post.rating || undefined,
+        clientCompany: post.client_company || undefined
       }))
 
       return posts
     } catch (error) {
-      console.error('Error fetching latest posts:', error)
       return []
     }
   }

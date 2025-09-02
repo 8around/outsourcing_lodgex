@@ -15,6 +15,25 @@ interface Category {
   post_type: string
 }
 
+interface PostFormData {
+  title: string
+  content: string
+  excerpt: string
+  image_url: string
+  category_id: string
+  tags: string[]
+  author: string
+  author_title: string
+  status: string
+  meta_title: string
+  meta_description: string
+  date: string
+  client_name: string
+  client_company: string
+  client_position: string
+  rating: number
+}
+
 interface PostEditorProps {
   postType: 'insights' | 'events' | 'testimonials'
   initialData?: any
@@ -33,7 +52,7 @@ export default function PostEditor({
   loading = false
 }: PostEditorProps) {
   // 기본값 설정
-  const defaultFormData = {
+  const defaultFormData: PostFormData = {
     title: '',
     content: '',
     excerpt: '',
@@ -54,8 +73,8 @@ export default function PostEditor({
   }
 
   // initialData가 있으면 병합, 없으면 기본값 사용
-  const [formData, setFormData] = useState(() => {
-    console.log('PostEditor - useState 초기화:', { initialData, defaultFormData })
+  const [formData, setFormData] = useState<PostFormData>(() => {
+    // PostEditor useState 초기화
     
     if (initialData) {
       const merged = {
@@ -64,11 +83,11 @@ export default function PostEditor({
         date: initialData.date || defaultFormData.date, // date는 항상 값이 있도록 보장
         tags: initialData.tags || []
       }
-      console.log('PostEditor - initialData 있음, merged:', merged)
+      // PostEditor initialData 있음, merged
       return merged
     }
     
-    console.log('PostEditor - defaultFormData 사용:', defaultFormData)
+    // PostEditor defaultFormData 사용
     return defaultFormData
   })
 
@@ -79,7 +98,7 @@ export default function PostEditor({
 
   // initialData가 변경될 때만 업데이트 (수정 모드로 전환 시)
   useEffect(() => {
-    console.log('PostEditor - useEffect 실행:', { initialData })
+    // PostEditor useEffect 실행
     
     if (initialData && Object.keys(initialData).length > 0) {
       const updatedFormData = {
@@ -89,7 +108,7 @@ export default function PostEditor({
         tags: initialData.tags || []
       }
       
-      console.log('PostEditor - useEffect에서 formData 업데이트:', updatedFormData)
+      // PostEditor useEffect에서 formData 업데이트
       setFormData(updatedFormData)
       
       if (initialData.image_url) {
@@ -144,22 +163,20 @@ export default function PostEditor({
 
   const handleSubmit = async (status: string) => {
     try {
-      console.log('PostEditor - handleSubmit 시작')
-      console.log('PostEditor - 현재 formData:', formData)
-      console.log('PostEditor - formData.date 값:', formData.date, 'type:', typeof formData.date)
+      // PostEditor handleSubmit 시작
       
       setUploading(true)
       
       // 이미지 업로드 처리
       let imageUrl = formData.image_url
       if (imageFile) {
-        console.log('PostEditor - 이미지 업로드 시작')
+        // PostEditor 이미지 업로드 시작
         const uploadedUrl = await uploadService.uploadImage(imageFile)
         if (uploadedUrl) {
-          console.log('PostEditor - 이미지 업로드 성공:', uploadedUrl)
+          // PostEditor 이미지 업로드 성공
           imageUrl = uploadedUrl
         } else {
-          console.error('PostEditor - 이미지 업로드 실패')
+          // PostEditor 이미지 업로드 실패
           alert('이미지 업로드에 실패했습니다.')
           setUploading(false)
           return
@@ -172,20 +189,20 @@ export default function PostEditor({
       let dateValue: string;
       
       if (!formData.date || formData.date === '' || formData.date === null || formData.date === undefined) {
-        console.warn('PostEditor - date 필드가 비어있음, 현재 시간으로 설정')
+        // PostEditor date 필드가 비어있음, 현재 시간으로 설정
         dateValue = new Date().toISOString()
       } else {
         try {
           // date 필드가 이미 ISO 형식인지 확인
           if (typeof formData.date === 'string' && formData.date.includes('T')) {
-            console.log('PostEditor - date가 이미 ISO 형식:', formData.date)
+            // PostEditor date가 이미 ISO 형식
             dateValue = formData.date
           } else {
-            console.log('PostEditor - date를 ISO 형식으로 변환 중:', formData.date)
+            // PostEditor date를 ISO 형식으로 변환 중
             dateValue = new Date(formData.date).toISOString()
           }
         } catch (dateError) {
-          console.error('PostEditor - date 변환 오류:', dateError)
+          // PostEditor date 변환 오류
           dateValue = new Date().toISOString()
         }
       }
@@ -220,12 +237,11 @@ export default function PostEditor({
         // testimonials는 client 필드들을 유지
       }
 
-      console.log('PostEditor - 최종 cleanedData:', cleanedData)
-      console.log('PostEditor - cleanedData.date:', cleanedData.date, 'type:', typeof cleanedData.date)
+      // PostEditor 최종 cleanedData
 
       await onSave(cleanedData)
     } catch (error) {
-      console.error('PostEditor - 저장 오류:', error)
+      // PostEditor 저장 오류
     }
   }
 

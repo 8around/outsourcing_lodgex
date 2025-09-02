@@ -27,7 +27,7 @@ export interface EmailResult {
  */
 export async function sendAdminNotification(
   data: ServiceRequestData,
-  adminEmails: string[] = [process.env.ADMIN_EMAIL || "ref6318@gmail.com"]
+  adminEmails: string[] = [process.env.ADMIN_EMAIL || "sjds77@naver.com"]
 ): Promise<EmailResult> {
   try {
     const submittedAt = new Date().toLocaleString("ko-KR", {
@@ -48,7 +48,7 @@ export async function sendAdminNotification(
     );
 
     const { data: result, error } = await resend.emails.send({
-      from: "jhlee@8around.kr",
+      from: "noreply@lodgex.co.kr",
       to: adminEmails,
       subject: `[LodgeX] 새로운 컨설팅 신청 - ${data.companyName}`,
       html: emailHtml,
@@ -56,14 +56,11 @@ export async function sendAdminNotification(
     });
 
     if (error) {
-      console.error("Admin notification email error:", error);
       return { success: false, error: error.message };
     }
 
-    console.log("Admin notification sent successfully:", result?.id);
     return { success: true, messageId: result?.id };
   } catch (error) {
-    console.error("Failed to send admin notification:", error);
     return {
       success: false,
       error: error instanceof Error ? error.message : "Unknown error occurred",
@@ -104,14 +101,11 @@ export async function sendClientConfirmation(
     });
 
     if (error) {
-      console.error("Client confirmation email error:", error);
       return { success: false, error: error.message };
     }
 
-    console.log("Client confirmation sent successfully:", result?.id);
     return { success: true, messageId: result?.id };
   } catch (error) {
-    console.error("Failed to send client confirmation:", error);
     return {
       success: false,
       error: error instanceof Error ? error.message : "Unknown error occurred",
@@ -136,19 +130,11 @@ export async function sendEmailWithRetry<T extends any[]>(
     }
 
     if (attempt === maxRetries) {
-      console.error(
-        `Email sending failed after ${maxRetries} attempts:`,
-        result.error
-      );
       return result;
     }
 
     // Exponential backoff
     const delay = baseDelay * Math.pow(2, attempt - 1);
-    console.warn(
-      `Email attempt ${attempt} failed, retrying in ${delay}ms:`,
-      result.error
-    );
     await new Promise((resolve) => setTimeout(resolve, delay));
   }
 
@@ -215,9 +201,9 @@ export function cleanupEmailCache(): void {
   const now = Date.now();
   const oneHourAgo = now - 60 * 60 * 1000;
 
-  for (const [email, timestamp] of emailCache.entries()) {
+  emailCache.forEach((timestamp, email) => {
     if (timestamp < oneHourAgo) {
       emailCache.delete(email);
     }
-  }
+  });
 }

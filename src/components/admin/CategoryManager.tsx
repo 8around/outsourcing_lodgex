@@ -30,7 +30,7 @@ export default function CategoryManager({ postType, onCategoriesUpdate }: Catego
       const data = await postsService.getCategories(postType)
       setCategories(data)
     } catch (err) {
-      console.error('카테고리 로드 실패:', err)
+      // 카테고리 로드 실패
       setError('카테고리를 불러오는 데 실패했습니다.')
     } finally {
       setLoading(false)
@@ -110,7 +110,7 @@ export default function CategoryManager({ postType, onCategoriesUpdate }: Catego
       onCategoriesUpdate()
       resetForm()
     } catch (err: any) {
-      console.error('카테고리 저장 실패:', err)
+      // 카테고리 저장 실패
       if (err.message?.includes('duplicate') || err.message?.includes('unique')) {
         setError('이미 존재하는 카테고리명입니다.')
       } else {
@@ -133,7 +133,7 @@ export default function CategoryManager({ postType, onCategoriesUpdate }: Catego
       setIsDeleteModalOpen(false)
       setDeletingCategory(null)
     } catch (err: any) {
-      console.error('카테고리 삭제 실패:', err)
+      // 카테고리 삭제 실패
       if (err.message?.includes('foreign key') || err.message?.includes('referenced')) {
         setError('해당 카테고리를 사용하는 게시글이 있어 삭제할 수 없습니다.')
       } else {

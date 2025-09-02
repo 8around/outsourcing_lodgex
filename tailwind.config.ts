@@ -71,6 +71,10 @@ const config: Config = {
         '18': '4.5rem',
         '88': '22rem',
         '128': '32rem',
+        'safe-top': 'env(safe-area-inset-top)',
+        'safe-bottom': 'env(safe-area-inset-bottom)',
+        'safe-left': 'env(safe-area-inset-left)',
+        'safe-right': 'env(safe-area-inset-right)',
       },
       borderRadius: {
         xl: '1rem',
@@ -98,16 +102,6 @@ const config: Config = {
         'lg-mobile': ['18px', '28px'],
         'xl-mobile': ['20px', '28px'],
         '2xl-mobile': ['24px', '32px'],
-      },
-      // 반응형 스페이싱
-      spacing: {
-        '18': '4.5rem',
-        '88': '22rem',
-        '128': '32rem',
-        'safe-top': 'env(safe-area-inset-top)',
-        'safe-bottom': 'env(safe-area-inset-bottom)',
-        'safe-left': 'env(safe-area-inset-left)',
-        'safe-right': 'env(safe-area-inset-right)',
       },
       // 애니메이션 추가
       animation: {

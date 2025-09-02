@@ -134,7 +134,6 @@ export function ConsultingForm({ className, onSubmit }: ConsultingFormProps) {
         additionalRequests: '',
       });
     } catch (error) {
-      console.error('Form submission error:', error);
       alert(
         error instanceof Error 
           ? error.message 

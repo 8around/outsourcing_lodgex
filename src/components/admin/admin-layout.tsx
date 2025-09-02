@@ -3,11 +3,10 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { adminAuth } from '@/lib/auth/admin'
 
 interface AdminInfo {
   id: number
-  loginId: string
+  email: string
   loginAt: string
 }
 
@@ -24,12 +23,19 @@ export default function AdminLayout({ children, adminInfo }: AdminLayoutProps) {
   const handleLogout = async () => {
     try {
       setIsLoggingOut(true)
-      // Clear session from localStorage
-      localStorage.removeItem('adminSession')
-      router.push('/admin/login')
-      router.refresh()
+      // Supabase Auth 로그아웃
+      const response = await fetch('/api/auth/logout', {
+        method: 'POST'
+      })
+      
+      if (response.ok) {
+        router.push('/admin/login')
+        router.refresh()
+      } else {
+        throw new Error('로그아웃 실패')
+      }
     } catch (error) {
-      console.error('Logout error:', error)
+      // Logout error
       alert('로그아웃 중 오류가 발생했습니다.')
     } finally {
       setIsLoggingOut(false)
@@ -141,15 +147,15 @@ export default function AdminLayout({ children, adminInfo }: AdminLayoutProps) {
               <div className="flex items-center space-x-3">
                 <div className="w-10 h-10 bg-[#D4B98B] rounded-full flex items-center justify-center">
                   <span className="text-white font-semibold text-sm">
-                    {adminInfo.loginId.charAt(0).toUpperCase()}
+                    {adminInfo.email.charAt(0).toUpperCase()}
                   </span>
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-white truncate">
-                    {adminInfo.loginId}
+                    {adminInfo.email}
                   </p>
                   <p className="text-xs text-gray-400 truncate">
-                    {adminInfo.title || '관리자'}
+                    {'관리자'}
                   </p>
                 </div>
               </div>
@@ -199,7 +205,7 @@ export default function AdminLayout({ children, adminInfo }: AdminLayoutProps) {
               <div className="flex items-center space-x-4">
                 <div className="text-right">
                   <p className="text-sm font-medium text-white">
-                    {adminInfo.loginId}
+                    {adminInfo.email}
                   </p>
                   <p className="text-xs text-gray-400">
                     관리자
