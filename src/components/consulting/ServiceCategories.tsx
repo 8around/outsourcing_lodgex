@@ -25,7 +25,7 @@ export function ServiceCategories({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-display font-bold text-primary mb-4">
+          <h2 className="text-3xl font-sans font-bold text-primary mb-4">
             서비스 항목
           </h2>
           <p className="text-lg text-neutral-600 max-w-3xl mx-auto">

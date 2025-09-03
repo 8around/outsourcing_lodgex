@@ -218,7 +218,7 @@ export function ContactForm({ className, onSubmit }: ContactFormProps) {
     >
       <Card className="bg-white border border-neutral-300 shadow-medium" padding="lg">
         <div className="mb-8">
-          <h2 className="text-2xl font-display font-bold text-primary mb-3">
+          <h2 className="text-2xl font-sans font-bold text-primary mb-3">
             컨설팅 신청
           </h2>
           <p className="text-neutral-600">

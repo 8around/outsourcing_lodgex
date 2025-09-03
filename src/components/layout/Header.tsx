@@ -69,7 +69,7 @@ export function Header() {
               className="flex items-center group min-h-touch min-w-touch rounded-lg p-1 -m-1 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
               aria-label="Lodgex 홈으로 이동"
             >
-              <span className="text-xl sm:text-2xl font-display font-bold text-primary-900 group-hover:text-primary-800 transition-colors">
+              <span className="text-xl sm:text-2xl font-sans font-bold text-primary-900 group-hover:text-primary-800 transition-colors">
                 Lodge<span className="text-gradient">x</span>
               </span>
             </Link>

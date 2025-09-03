@@ -27,7 +27,7 @@ export function Footer() {
             {/* Company Info */}
             <div className="lg:col-span-1">
               <Link href="/" className="inline-flex items-center mb-6">
-                <span className="text-3xl font-display font-bold">
+                <span className="text-3xl font-sans font-bold">
                   Lodge<span className="text-accent-400">x</span>
                 </span>
               </Link>
@@ -57,7 +57,7 @@ export function Footer() {
 
             {/* Quick Links */}
             <div className="lg:col-span-1">
-              <h3 className="text-lg font-display font-semibold text-accent-400 mb-6">
+              <h3 className="text-lg font-sans font-semibold text-accent-400 mb-6">
                 빠른 링크
               </h3>
               <ul className="space-y-4">
@@ -89,13 +89,7 @@ export function Footer() {
         <div className="border-t border-primary-800 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-primary-300 text-center md:text-left">
-              <p>© 2024 Lodgex. All rights reserved.</p>
-            </div>
-            
-            <div className="text-primary-300 text-center md:text-right">
-              <p className="text-sm">
-                Made with ❤️ for the hospitality industry
-              </p>
+              <p>© 2025 Lodgex. All rights reserved.</p>
             </div>
           </div>
         </div>

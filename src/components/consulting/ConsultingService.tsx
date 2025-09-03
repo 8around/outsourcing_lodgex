@@ -32,7 +32,7 @@ export function ConsultingService({ className }: ConsultingServiceProps) {
         <div className="absolute inset-0 bg-black/30"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6 drop-shadow-lg">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-sans font-bold mb-6 drop-shadow-lg">
               호텔 위탁운영 &<br />
               전문 컨설팅
             </h1>
@@ -70,7 +70,7 @@ export function ConsultingService({ className }: ConsultingServiceProps) {
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-display font-bold text-primary mb-4">
+            <h2 className="text-3xl font-sans font-bold text-primary mb-4">
               왜 Lodgex를 선택해야 할까요?
             </h2>
             <p className="text-lg text-neutral-600 max-w-3xl mx-auto">
@@ -138,52 +138,12 @@ export function ConsultingService({ className }: ConsultingServiceProps) {
         <ServiceCategories categories={serviceCategories} />
       </div>
 
-      {/* Statistics Section */}
-      <section className="py-16 bg-primary-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-display font-bold text-primary mb-4">
-              검증된 성과
-            </h2>
-            <p className="text-lg text-neutral-600">
-              Lodgex와 함께한 호텔들의 실제 성과를 확인해보세요.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-              <div className="text-4xl font-display font-bold text-primary mb-2">
-                50+
-              </div>
-              <div className="text-neutral-600">컨설팅 완료</div>
-            </div>
-            <div>
-              <div className="text-4xl font-display font-bold text-primary mb-2">
-                25%
-              </div>
-              <div className="text-neutral-600">평균 수익 개선</div>
-            </div>
-            <div>
-              <div className="text-4xl font-display font-bold text-primary mb-2">
-                98%
-              </div>
-              <div className="text-neutral-600">고객 만족도</div>
-            </div>
-            <div>
-              <div className="text-4xl font-display font-bold text-primary mb-2">
-                15%
-              </div>
-              <div className="text-neutral-600">운영비 절감</div>
-            </div>
-          </div>
-        </div>
-      </section>
 
 
       {/* CTA Section */}
       <section className="py-16 bg-primary-900 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-display font-bold mb-4">
+          <h2 className="text-3xl font-sans font-bold mb-4">
             지금 바로 시작하세요
           </h2>
           <p className="text-xl text-primary-100 mb-8">
