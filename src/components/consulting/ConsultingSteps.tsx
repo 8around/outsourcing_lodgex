@@ -14,7 +14,7 @@ export function ConsultingSteps({ steps, className }: ConsultingStepsProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-display font-bold text-primary mb-4">
+          <h2 className="text-3xl font-sans font-bold text-primary mb-4">
             컨설팅 프로세스
           </h2>
           <p className="text-lg text-neutral-600 max-w-3xl mx-auto">
@@ -31,13 +31,10 @@ export function ConsultingSteps({ steps, className }: ConsultingStepsProps) {
                 className="h-full text-center bg-white hover:shadow-medium transition-shadow duration-300"
                 padding="lg"
               >
-                {/* Step Number & Icon */}
+                {/* Icon */}
                 <div className="mb-6">
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary-50 text-primary mb-4">
-                    <span className="text-2xl">{step.icon}</span>
-                  </div>
-                  <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary text-white text-sm font-bold">
-                    {step.step}
+                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary-50 text-primary">
+                    <span className="text-3xl">{step.icon}</span>
                   </div>
                 </div>
 
@@ -49,23 +46,6 @@ export function ConsultingSteps({ steps, className }: ConsultingStepsProps) {
                   {step.description}
                 </p>
               </Card>
-
-              {/* Arrow (except for last item) */}
-              {index < steps.length - 1 && (
-                <div className="hidden lg:block absolute top-1/2 -right-3 transform -translate-y-1/2 z-10">
-                  <svg
-                    className="w-6 h-6 text-accent"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
-              )}
             </div>
           ))}
         </div>

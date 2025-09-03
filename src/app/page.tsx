@@ -197,48 +197,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* LinkedIn-style Professional Metrics Section */}
-        <section className="py-20 bg-neutral-100" aria-labelledby="stats-title">
-          <div className="container-max section-padding">
-            <div className="text-center mb-16">
-              <h2 
-                id="stats-title"
-                className="font-sans font-semibold text-neutral-800 mb-6"
-              >
-                검증된 실적과 신뢰
-              </h2>
-              <p className="text-lg text-neutral-400 max-w-2xl mx-auto">
-                전문 호텔 운영 서비스로 고객들과 함께 만들어온 성과입니다.
-              </p>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="linkedin-card card-hover p-8">
-                  <div className="text-4xl font-bold text-primary mb-3">50+</div>
-                  <div className="text-neutral-800 font-semibold mb-2">성공적인 프로젝트</div>
-                  <div className="text-sm text-neutral-400">다양한 규모의 호텔 운영 개선</div>
-                </div>
-              </div>
-              
-              <div className="text-center">
-                <div className="linkedin-card card-hover p-8">
-                  <div className="text-4xl font-bold text-primary mb-3">15년+</div>
-                  <div className="text-neutral-800 font-semibold mb-2">업계 경험</div>
-                  <div className="text-sm text-neutral-400">호텔 운영 전문 노하우</div>
-                </div>
-              </div>
-              
-              <div className="text-center">
-                <div className="linkedin-card card-hover p-8">
-                  <div className="text-4xl font-bold text-accent mb-3">98%</div>
-                  <div className="text-neutral-800 font-semibold mb-2">고객 만족도</div>
-                  <div className="text-sm text-neutral-400">지속적인 파트너십 유지</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* LinkedIn-style Professional CTA Section */}
         <section 

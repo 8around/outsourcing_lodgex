@@ -175,7 +175,7 @@ export function ConsultingForm({ className, onSubmit }: ConsultingFormProps) {
     >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-display font-bold text-primary mb-4">
+          <h2 className="text-3xl font-sans font-bold text-primary mb-4">
             컨설팅 신청
           </h2>
           <p className="text-lg text-neutral-600">

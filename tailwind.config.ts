@@ -65,7 +65,6 @@ const config: Config = {
       },
       fontFamily: {
         sans: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
-        display: ['var(--font-playfair)', 'Playfair Display', 'serif'],
       },
       spacing: {
         '18': '4.5rem',

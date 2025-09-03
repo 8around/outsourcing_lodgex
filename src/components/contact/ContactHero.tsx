@@ -13,7 +13,7 @@ export function ContactHero({ className }: ContactHeroProps) {
       <div className="absolute inset-0 bg-black/30"></div>
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6 drop-shadow-lg">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-sans font-bold mb-6 drop-shadow-lg">
             문의하기
           </h1>
           <p className="text-xl md:text-2xl text-white/95 mb-8 leading-relaxed drop-shadow">

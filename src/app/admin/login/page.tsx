@@ -125,7 +125,7 @@ export default function AdminLoginPage() {
         </div>
         
         <p className="text-sm text-white/60 font-medium">
-          © 2024 Lodgex. All rights reserved.
+          © 2025 Lodgex. All rights reserved.
         </p>
       </div>
     </>
