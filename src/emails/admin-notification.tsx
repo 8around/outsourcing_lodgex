@@ -153,9 +153,8 @@ const main = {
 
 const container = {
   backgroundColor: '#ffffff',
-  margin: '0 auto',
-  padding: '20px 0 48px',
-  marginBottom: '64px',
+  margin: '64px auto',
+  padding: '20px 20px 48px 20px',
   maxWidth: '600px',
 };
 
@@ -185,7 +184,7 @@ const text = {
 };
 
 const infoSection = {
-  margin: '24px 20px',
+  margin: '24px 0',
 };
 
 const infoRow = {
