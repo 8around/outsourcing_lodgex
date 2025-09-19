@@ -45,8 +45,8 @@ export default function HomePage() {
               {/* Content Side */}
               <div className="order-2 lg:order-1">
                 <h1 className="font-sans font-semibold text-neutral-800 mb-6 text-balance leading-tight">
-                  숙박업 운영 전문가와{' '}
-                  <span className="text-primary">직접 연결되는</span>{' '}
+                  숙박업 운영 전문가와&nbsp;<br className='hidden lg:block'/>
+                  <span className="text-primary">직접 연결되는</span>&nbsp;<br className='hidden lg:block'/>
                   전문 플랫폼
                 </h1>
                 <p className="text-lg text-neutral-400 mb-8 leading-relaxed">
