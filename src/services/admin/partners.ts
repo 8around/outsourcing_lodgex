@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/client";
 import { Partner } from "@/types";
+import { uploadService } from "@/services/admin/upload";
 
 export interface PartnerFilters {
   search?: string;
@@ -170,8 +171,18 @@ export class PartnersService {
   }
 
   // 파트너사 삭제
-  async deletePartner(id: string): Promise<void> {
+  async deletePartner(id: string, imageUrl?: string | null): Promise<void> {
     try {
+      // 이미지 URL이 있으면 이미지 파일 먼저 삭제
+      if (imageUrl) {
+        const imageDeleted = await uploadService.deleteImage(imageUrl);
+        if (!imageDeleted) {
+          console.error(`파트너사 이미지 삭제 실패: ${imageUrl}`);
+          // 이미지 삭제 실패해도 계속 진행
+        }
+      }
+
+      // DB에서 파트너 레코드 삭제
       const { error } = await this.getClient()
         .from("partners")
         .delete()

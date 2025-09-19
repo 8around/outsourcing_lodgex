@@ -35,6 +35,8 @@ export default function PartnersPage() {
     is_active: true,
     display_order: 0,
   });
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string>("");
   const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
 
@@ -87,12 +89,21 @@ export default function PartnersPage() {
     fetchPartners();
   }, [currentPage, statusFilter, searchTerm]);
 
+  // 컴포넌트 cleanup - blob URL 정리
+  useEffect(() => {
+    return () => {
+      if (imagePreview && imagePreview.startsWith('blob:')) {
+        URL.revokeObjectURL(imagePreview);
+      }
+    };
+  }, [imagePreview]);
+
   // 파트너사 삭제
-  const handleDelete = async (id: string) => {
+  const handleDelete = async (partner: Partner) => {
     if (!confirm("정말 삭제하시겠습니까?")) return;
 
     try {
-      await partnersService.deletePartner(id);
+      await partnersService.deletePartner(partner.id, partner.image_url);
       fetchPartners();
     } catch (error) {
       console.error("파트너사 삭제 중 오류:", error);
@@ -109,13 +120,24 @@ export default function PartnersPage() {
       is_active: partner.is_active || false,
       display_order: partner.display_order || 0,
     });
+    // 기존 이미지를 미리보기로 설정
+    if (partner.image_url) {
+      setImagePreview(partner.image_url);
+    }
     setShowCreateModal(true);
   };
 
   // 모달 닫기
   const handleCloseModal = () => {
+    // blob URL 정리
+    if (imagePreview && imagePreview.startsWith('blob:')) {
+      URL.revokeObjectURL(imagePreview);
+    }
+    
     setShowCreateModal(false);
     setEditingPartner(null);
+    setSelectedFile(null);
+    setImagePreview("");
     setFormData({
       name: "",
       image_url: "",
@@ -125,20 +147,19 @@ export default function PartnersPage() {
   };
 
   // 이미지 업로드
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    try {
-      setUploading(true);
-      const imageUrl = await uploadService.uploadImage(file, "partners");
-      setFormData((prev) => ({ ...prev, image_url: imageUrl || "" }));
-    } catch (error) {
-      console.error("이미지 업로드 중 오류:", error);
-      alert("이미지 업로드 중 오류가 발생했습니다.");
-    } finally {
-      setUploading(false);
+    // 이전 미리보기 URL 정리
+    if (imagePreview && imagePreview.startsWith('blob:')) {
+      URL.revokeObjectURL(imagePreview);
     }
+
+    // 파일 저장 및 미리보기 생성
+    setSelectedFile(file);
+    const previewUrl = URL.createObjectURL(file);
+    setImagePreview(previewUrl);
   };
 
   // 파트너사 저장
@@ -150,11 +171,37 @@ export default function PartnersPage() {
 
     try {
       setSaving(true);
-      if (editingPartner) {
-        await partnersService.updatePartner(editingPartner.id, formData);
-      } else {
-        await partnersService.createPartner(formData);
+      let finalImageUrl = formData.image_url;
+
+      // 새 이미지가 선택되었을 경우
+      if (selectedFile) {
+        setUploading(true);
+        
+        // 수정 모드이고 기존 이미지가 있으면 삭제
+        if (editingPartner && editingPartner.image_url) {
+          await uploadService.deleteImage(editingPartner.image_url);
+        }
+        
+        // 새 이미지 업로드
+        const uploadedUrl = await uploadService.uploadImage(selectedFile, "partners");
+        if (uploadedUrl) {
+          finalImageUrl = uploadedUrl;
+        } else {
+          alert("이미지 업로드에 실패했습니다.");
+          return;
+        }
+        setUploading(false);
       }
+
+      // 파트너사 정보 저장
+      const saveData = { ...formData, image_url: finalImageUrl };
+      
+      if (editingPartner) {
+        await partnersService.updatePartner(editingPartner.id, saveData);
+      } else {
+        await partnersService.createPartner(saveData);
+      }
+      
       handleCloseModal();
       fetchPartners();
     } catch (error) {
@@ -162,6 +209,7 @@ export default function PartnersPage() {
       alert("저장 중 오류가 발생했습니다.");
     } finally {
       setSaving(false);
+      setUploading(false);
     }
   };
 
@@ -258,40 +306,48 @@ export default function PartnersPage() {
 
       {/* 파트너사 목록 */}
       <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-        {loading ? (
-          <div className="p-8 text-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
-            <p className="text-gray-600 mt-2">로딩 중...</p>
-          </div>
-        ) : partners.length === 0 ? (
-          <div className="p-8 text-center">
-            <Building2 className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-            <p className="text-gray-600">파트너사가 없습니다.</p>
-          </div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  파트너사
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  상태
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  순서
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  생성일
+                </th>
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  작업
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200">
+              {loading ? (
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    파트너사
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    상태
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    순서
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    생성일
-                  </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    작업
-                  </th>
+                  <td
+                    colSpan={8}
+                    className="px-6 py-4 text-center text-gray-500"
+                  >
+                    로딩 중...
+                  </td>
                 </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200">
-                {partners.map((partner) => (
+              ) : partners.length === 0 ? (
+                <tr>
+                  <td
+                    colSpan={8}
+                    className="px-6 py-4 text-center text-gray-500"
+                  >
+                    파트너사가 없습니다.
+                  </td>
+                </tr>
+              ) : (
+                partners.map((partner) => (
                   <tr
                     key={partner.id}
                     className="hover:bg-gray-50 transition-colors"
@@ -353,7 +409,7 @@ export default function PartnersPage() {
                           <Edit2 className="w-4 h-4" />
                         </button>
                         <button
-                          onClick={() => handleDelete(partner.id)}
+                          onClick={() => handleDelete(partner)}
                           className="text-red-400 hover:text-red-300 transition-colors"
                           title="삭제"
                         >
@@ -362,11 +418,11 @@ export default function PartnersPage() {
                       </div>
                     </td>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {/* 페이지네이션 */}
@@ -438,10 +494,10 @@ export default function PartnersPage() {
                     disabled={uploading}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 file:bg-blue-600 file:text-white file:border-0 file:rounded file:px-3 file:py-1 file:mr-3"
                   />
-                  {formData.image_url && (
+                  {imagePreview && (
                     <div className="flex items-center justify-center">
                       <img
-                        src={formData.image_url}
+                        src={imagePreview}
                         alt="미리보기"
                         className="h-20 w-auto object-contain rounded-lg"
                       />
