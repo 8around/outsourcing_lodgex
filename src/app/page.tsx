@@ -54,14 +54,14 @@ export default function HomePage() {
                 <div className="flex flex-col xs:flex-row gap-4">
                   <Link
                     href="/services#contact-form"
-                    className="btn-primary text-base font-medium px-8 py-3"
+                    className="btn-primary text-xs sm:text-base font-medium px-4 sm:px-8 py-3"
                     aria-label="컨설팅 요청하기"
                   >
                     전문가와 연결하기
                   </Link>
                   <Link
                     href="/services"
-                    className="btn-outline text-base font-medium px-8 py-3"
+                    className="btn-outline text-xs sm:text-base font-medium px-4 sm:px-8 py-3"
                     aria-label="서비스 상세 정보 보기"
                   >
                     서비스 둘러보기

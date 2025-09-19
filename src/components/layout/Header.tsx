@@ -15,6 +15,7 @@ export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
   const menuRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -24,7 +25,12 @@ export function Header() {
   // Close mobile menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(event.target as Node) &&
+        buttonRef.current &&
+        !buttonRef.current?.contains(event.target as Node)
+      ){
         setIsMenuOpen(false);
       }
     };
@@ -111,6 +117,7 @@ export function Header() {
           {/* Mobile menu button */}
           <div className="md:hidden">
             <button
+              ref={buttonRef}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="inline-flex items-center justify-center min-h-touch min-w-touch rounded-lg text-neutral-600 hover:text-primary-900 hover:bg-neutral-100 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 transition-colors"
               aria-expanded={isMenuOpen}
