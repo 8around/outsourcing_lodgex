@@ -18,7 +18,7 @@ export function ConsultingSteps({ steps, className }: ConsultingStepsProps) {
             컨설팅 프로세스
           </h2>
           <p className="text-lg text-neutral-600 max-w-3xl mx-auto">
-            체계적인 4단계 프로세스를 통해 호텔의 운영 효율성을 극대화하고
+            체계적인 4단계 프로세스를 통해 숙박업 운영 효율성을 극대화하고
             지속적인 성과 개선을 지원합니다.
           </p>
         </div>
@@ -53,7 +53,7 @@ export function ConsultingSteps({ steps, className }: ConsultingStepsProps) {
         {/* CTA */}
         <div className="text-center mt-12">
           <p className="text-neutral-600 mb-6">
-            전문 컨설턴트와 함께 호텔 운영의 새로운 전환점을 만들어보세요.
+            숙박업 전문파트너, 컨설턴트와 함께 숙박업 운영의 새로운 전환점을 만들어보세요.
           </p>
           <a
             href="/contact"

@@ -45,12 +45,12 @@ export default function HomePage() {
               {/* Content Side */}
               <div className="order-2 lg:order-1">
                 <h1 className="font-sans font-semibold text-neutral-800 mb-6 text-balance leading-tight">
-                  호텔 운영 전문가와{' '}
+                  숙박업 운영 전문가와{' '}
                   <span className="text-primary">직접 연결되는</span>{' '}
                   전문 플랫폼
                 </h1>
                 <p className="text-lg text-neutral-400 mb-8 leading-relaxed">
-                  검증된 호텔 운영 전문가들과의 직접적인 연결을 통해 최고 수준의 
+                  <strong>관광호텔, 중소형 호텔, 리조트, 일반호텔 등</strong> 검증된 숙박업 운영 전문가들과의 연결을 통해 최고 수준의 
                   컨설팅과 위탁운영 서비스를 제공합니다.
                 </p>
                 <div className="flex flex-col xs:flex-row gap-4">
@@ -98,20 +98,20 @@ export default function HomePage() {
                 id="features-title"
                 className="font-sans font-semibold text-neutral-800 mb-6"
               >
-                전문적인 호텔 운영 솔루션
+                전문적인 숙박업 운영 솔루션
               </h2>
               <p className="text-lg text-neutral-400 max-w-3xl mx-auto leading-relaxed">
                 검증된 전문가 네트워크와 데이터 기반 접근법으로 
-                호텔 운영의 새로운 기준을 제시합니다.
+                숙박업 운영의 새로운 기준을 제시합니다.
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
                 {
-                  title: '검증된 전문가 네트워크',
+                  title: '검증된 전문가 네트워크 (프로필)',
                   description:
-                    '호텔 운영 분야의 검증된 전문가들과 직접 연결하여 최고 수준의 컨설팅 서비스를 제공합니다.',
+                    '관광호텔, 중소형 호텔, 리조트, 일반호텔 등 숙박업 운영 분야의 검증된 전문가들과 직접 연결하여 최고 수준의 컨설팅 서비스를 제공합니다.',
                   icon: (
                     <svg
                       className="w-6 h-6 text-primary"
@@ -131,7 +131,7 @@ export default function HomePage() {
                 {
                   title: '맞춤형 운영 전략',
                   description:
-                    '각 호텔의 특성과 목표에 맞춘 개별화된 운영 전략과 실행 계획을 수립합니다.',
+                    '숙박업체의 특성과 목표에 맞춘 개별화된 운영 전략과 실행 계획을 수립합니다.',
                   icon: (
                     <svg
                       className="w-6 h-6 text-primary"
@@ -151,7 +151,7 @@ export default function HomePage() {
                 {
                   title: '데이터 기반 성과 관리',
                   description:
-                    'KPI 중심의 체계적인 성과 측정과 지속적인 개선을 통해 확실한 결과를 보장합니다.',
+                    'KPI 중심의 체계적인 성과 측정과 지속적인 개선을 통해 맞춤형 개선전략으로 경쟁력을 강화하고 미래를 준비합니다.',
                   icon: (
                     <svg
                       className="w-6 h-6 text-primary"
@@ -209,11 +209,11 @@ export default function HomePage() {
                 id="cta-title"
                 className="font-sans font-semibold mb-6 text-white"
               >
-                호텔 운영 전문가와 연결해보세요
+                숙박업 운영 전문가와 연결해보세요
               </h2>
               <p className="text-xl mb-10 text-white/90 leading-relaxed">
-                검증된 전문가와의 상담을 통해 귀하의 호텔 운영 방식을 
-                혁신해보세요. 전문적인 진단부터 실행까지 함께합니다.
+                검증된 전문가와의 상담을 통해 귀하의 숙박업 운영 방식을 
+                혁신해보세요. 전문적인 진단부터 실행<s>까지</s> 함께합니다.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <Link

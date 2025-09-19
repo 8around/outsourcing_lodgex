@@ -108,7 +108,7 @@ export default async function AdminDashboard() {
       <div className="bg-gradient-to-r from-[#1C2A44] to-[#2563eb] rounded-lg p-8 text-white">
         <h1 className="text-3xl font-bold mb-2">관리자 대시보드에 오신 것을 환영합니다!</h1>
         <p className="text-xl opacity-90">
-          LodgeX 호텔 컨설팅 서비스를 효율적으로 관리하세요.
+          LodgeX 숙박업 컨설팅 서비스를 효율적으로 관리하세요.
         </p>
       </div>
 

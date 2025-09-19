@@ -112,7 +112,7 @@ export default function EventsPage() {
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">이벤트 관리</h1>
-          <p className="text-sm text-gray-600 mt-1">호텔 운영 전문 지식과 트렌드를 공유합니다</p>
+          <p className="text-sm text-gray-600 mt-1">숙박업 운영 전문 지식과 트렌드를 공유합니다</p>
         </div>
         <div className="flex gap-3">
           <button

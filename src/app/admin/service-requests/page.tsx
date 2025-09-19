@@ -185,7 +185,7 @@ export default function ServiceRequestsPage() {
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">서비스 신청 관리</h1>
-          <p className="text-sm text-gray-600 mt-1">호텔 서비스 신청 현황을 관리합니다</p>
+          <p className="text-sm text-gray-600 mt-1">숙박업 서비스 신청 현황을 관리합니다</p>
         </div>
       </div>
 
@@ -238,7 +238,7 @@ export default function ServiceRequestsPage() {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <input
                   type="text"
-                  placeholder="호텔명, 담당자, 이메일 검색..."
+                  placeholder="기업명, 담당자, 이메일 검색..."
                   value={searchInput}
                   onChange={(e) => setSearchInput(e.target.value)}
                   onKeyPress={handleSearchKeyPress}

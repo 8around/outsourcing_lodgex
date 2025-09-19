@@ -10,16 +10,16 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Lodgex - 호텔 위탁운영 & 컨설팅',
+    default: 'Lodgex - 숙박업 위탁운영 & 컨설팅',
     template: '%s | Lodgex',
   },
   description:
-    '프리미엄 호텔 위탁운영 및 전문 컨설팅 서비스를 통해 호텔의 가치를 극대화합니다.',
+    '숙박업 위탁운영 및 전문 컨설팅 서비스를 통해 숙박업의 가치를 극대화합니다.',
   keywords: [
-    '호텔 위탁운영',
-    '호텔 컨설팅',
-    '호텔 매니지먼트',
-    '호텔 경영',
+    '숙박업 위탁운영',
+    '숙박업 컨설팅',
+    '숙박업 매니지먼트',
+    '숙박업 경영',
     '숙박업 컨설팅',
   ],
   authors: [{ name: 'Lodgex' }],
@@ -28,16 +28,16 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'ko_KR',
     url: 'https://lodgex.co.kr',
-    title: 'Lodgex - 호텔 위탁운영 & 컨설팅',
+    title: 'Lodgex - 숙박업 위탁운영 & 컨설팅',
     description:
-      '프리미엄 호텔 위탁운영 및 전문 컨설팅 서비스를 통해 호텔의 가치를 극대화합니다.',
+      '숙박업 위탁운영 및 전문 컨설팅 서비스를 통해 숙박업의 가치를 극대화합니다.',
     siteName: 'Lodgex',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Lodgex - 호텔 위탁운영 & 컨설팅',
+    title: 'Lodgex - 숙박업 위탁운영 & 컨설팅',
     description:
-      '프리미엄 호텔 위탁운영 및 전문 컨설팅 서비스를 통해 호텔의 가치를 극대화합니다.',
+      '숙박업 위탁운영 및 전문 컨설팅 서비스를 통해 숙박업의 가치를 극대화합니다.',
   },
   robots: {
     index: true,
