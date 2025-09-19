@@ -2,28 +2,27 @@
 
 import { useState, useEffect } from "react";
 import {
-  documentService,
-  type CompanyDocument,
-} from "@/services/admin/documents";
+  introductionService,
+  type Introduction,
+} from "@/services/admin/introductions";
 import { formatFileSize } from "@/services/admin/storage";
-import { Button } from "@/components/ui";
 import { Download, Plus, Trash2 } from "lucide-react";
 
-export default function DocumentsPage() {
-  const [documents, setDocuments] = useState<CompanyDocument[]>([]);
+export default function IntroductionsPage() {
+  const [introductions, setIntroductions] = useState<Introduction[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
 
   useEffect(() => {
-    loadDocuments();
+    loadIntroductions();
   }, []);
 
-  const loadDocuments = async () => {
+  const loadIntroductions = async () => {
     try {
       setIsLoading(true);
-      const docs = await documentService.getCompanyDocuments();
-      setDocuments(docs);
+      const introductions = await introductionService.getIntroductions();
+      setIntroductions(introductions);
     } catch (error) {
       console.error("문서 목록 로드 실패:", error);
     } finally {
@@ -41,8 +40,8 @@ export default function DocumentsPage() {
       setIsUploading(true);
       setUploadError(null);
 
-      await documentService.uploadCompanyDocument(file);
-      await loadDocuments(); // 목록 새로고침
+      await introductionService.uploadIntroduction(file);
+      await loadIntroductions(); // 목록 새로고침
 
       // 파일 입력 필드 초기화
       event.target.value = "";
@@ -56,29 +55,21 @@ export default function DocumentsPage() {
     }
   };
 
-  const handleDeleteDocument = async (fileName: string) => {
+  const handleDeleteIntroduction = async (fileName: string) => {
     if (!confirm("정말 삭제하시겠습니까?")) return;
 
     try {
-      await documentService.deleteCompanyDocument(fileName);
-      await loadDocuments(); // 목록 새로고침
+      await introductionService.deleteIntroduction(fileName);
+      await loadIntroductions(); // 목록 새로고침
     } catch (error) {
       console.error("문서 삭제 실패:", error);
       alert("문서 삭제에 실패했습니다.");
     }
   };
 
-  const handleDownload = async (doc: CompanyDocument) => {
+  const handleDownload = async (introduction: Introduction) => {
     try {
-      const link = globalThis.document.createElement("a");
-      link.href = doc.url;
-      link.download = doc.name;
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-
-      globalThis.document.body.appendChild(link);
-      link.click();
-      globalThis.document.body.removeChild(link);
+      window.open(introduction.url, "_blank");
     } catch (error) {
       console.error("다운로드 실패:", error);
       alert("파일 다운로드에 실패했습니다.");
@@ -147,35 +138,39 @@ export default function DocumentsPage() {
                   로딩 중...
                 </td>
               </tr>
-            ) : documents.length === 0 ? (
+            ) : introductions.length === 0 ? (
               <tr>
                 <td colSpan={6} className="px-6 py-4 text-center text-gray-500">
                   업로드된 파일이 없습니다.
                 </td>
               </tr>
             ) : (
-              documents.map((doc) => (
-                <tr key={doc.id} className="hover:bg-gray-50">
+              introductions.map((introduction) => (
+                <tr key={introduction.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4">
-                    <div className="text-sm text-gray-500">{doc.name}</div>
+                    <div className="text-sm text-gray-500">
+                      {introduction.name}
+                    </div>
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-900">
-                    {formatFileSize(doc.size)}
+                    {formatFileSize(introduction.size)}
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-500">
-                    {new Date(doc.uploadedAt).toLocaleString("ko-KR")}
+                    {new Date(introduction.uploadedAt).toLocaleString("ko-KR")}
                   </td>
                   <td className="px-6 py-4 text-right text-sm font-medium">
                     <div className="flex justify-end gap-2">
                       <button
-                        onClick={() => handleDownload(doc)}
+                        onClick={() => handleDownload(introduction)}
                         className="text-blue-600 hover:text-blue-900"
                       >
                         <Download className="w-4 h-4" />
                       </button>
 
                       <button
-                        onClick={() => handleDeleteDocument(doc.name)}
+                        onClick={() =>
+                          handleDeleteIntroduction(introduction.name)
+                        }
                         className="text-red-600 hover:text-red-900"
                       >
                         <Trash2 className="w-4 h-4" />

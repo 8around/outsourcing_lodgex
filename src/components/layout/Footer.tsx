@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { CompanyDocumentDownload } from '@/components/ui';
+import { IntroductionDownloadBtn } from '@/components/common/IntroductionDownloadBtn';
 
 const footerData = {
   quickLinks: [
@@ -55,7 +55,7 @@ export function Footer() {
               </div>
 
               {/* 회사 소개서 다운로드 버튼 */}
-              <CompanyDocumentDownload />
+              <IntroductionDownloadBtn />
 
             </div>
 

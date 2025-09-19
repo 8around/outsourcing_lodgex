@@ -2,62 +2,58 @@
 
 import { useState, useEffect } from "react";
 import {
-  documentService,
-  type CompanyDocument,
-} from "@/services/admin/documents";
+  introductionService,
+  type Introduction,
+} from "@/services/admin/introductions";
 
-interface CompanyDocumentDownloadProps {
+interface IntroductionDownloadBtnProps {
   className?: string;
 }
 
-export function CompanyDocumentDownload({
+export function IntroductionDownloadBtn({
   className = "",
-}: CompanyDocumentDownloadProps) {
-  const [document, setDocument] = useState<CompanyDocument | null>(null);
+}: IntroductionDownloadBtnProps) {
+  const [introduction, setIntroduction] = useState<Introduction | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isDownloading, setIsDownloading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    loadLatestDocument();
+    loadLatestIntroduction();
   }, []);
 
-  const loadLatestDocument = async () => {
+  const loadLatestIntroduction = async () => {
     try {
       setIsLoading(true);
-      setError(null);
-      const latestDoc = await documentService.getLatestCompanyDocument();
-      setDocument(latestDoc);
+      const latestDoc = await introductionService.getLatestIntroduction();
+      setIntroduction(latestDoc);
     } catch (err) {
       console.error("문서 로드 실패:", err);
-      setError("문서를 불러오는데 실패했습니다.");
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleDownload = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (!document) return;
+    if (!introduction) return;
 
     try {
       setIsDownloading(true);
-      window.open(document.url, "_blank");
+      window.open(introduction.url, "_blank");
     } catch (err) {
       console.error("다운로드 실패:", err);
-      setError("파일 다운로드에 실패했습니다.");
     } finally {
       setIsDownloading(false);
     }
   };
 
   // 다운로드 버튼
-  return !isLoading && document ? (
+  return !isLoading && introduction ? (
     <div className={`${className}`}>
       <button
         onClick={handleDownload}
         disabled={isDownloading}
         className="inline-flex items-center gap-3 bg-accent-500 hover:bg-accent-600 text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-        aria-label={`회사 소개서 다운로드: ${document.name}`}
+        aria-label={`회사 소개서 다운로드: ${introduction.name}`}
       >
         {isDownloading ? (
           <>
@@ -87,5 +83,3 @@ export function CompanyDocumentDownload({
     </div>
   ) : null;
 }
-
-export default CompanyDocumentDownload;
