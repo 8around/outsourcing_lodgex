@@ -3,6 +3,7 @@ import { Footer } from '@/components/layout/Footer';
 import { ImageSlider } from '@/components/ui';
 import { SkipLinks } from '@/components/common/SkipLinks';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
+import { PartnersSection } from '@/components/home/PartnersSection';
 import Link from 'next/link';
 
 const heroSlides = [
@@ -197,7 +198,6 @@ export default function HomePage() {
           </div>
         </section>
 
-
         {/* LinkedIn-style Professional CTA Section */}
         <section 
           className="py-20 bg-primary"
@@ -213,7 +213,7 @@ export default function HomePage() {
               </h2>
               <p className="text-xl mb-10 text-white/90 leading-relaxed">
                 검증된 전문가와의 상담을 통해 귀하의 숙박업 운영 방식을 
-                혁신해보세요. 전문적인 진단부터 실행<s>까지</s> 함께합니다.
+                혁신해보세요. 전문적인 진단부터 실행까지 함께합니다.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <Link
@@ -234,6 +234,9 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+
+        {/* Partners Section */}
+        <PartnersSection />
       </main>
 
       <Footer />
