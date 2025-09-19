@@ -9,22 +9,19 @@ import Link from 'next/link';
 const heroSlides = [
   {
     id: 1,
-    image:
-      'https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1932&q=80',
-    alt: '럭셔리 호텔 로비',
+    image: '/images/hero/hotel-lobby-1.png',
+    alt: '전문적이고 럭셔리한 호텔 로비'
   },
   {
     id: 2,
-    image:
-      'https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1932&q=80',
-    alt: '호텔 비즈니스 미팅',
+    image: '/images/hero/hotel-restaurant-3.png',
+    alt: '고급 호텔 파인다이닝 레스토랑',
   },
   {
     id: 3,
-    image:
-      'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1950&q=80',
-    alt: '고급 호텔 레스토랑',
-  },
+    image: '/images/hero/hotel-room-2.png',
+    alt: '호텔 객실',
+  }
 ];
 
 export default function HomePage() {
@@ -75,7 +72,7 @@ export default function HomePage() {
               {/* LinkedIn-style Image Slider */}
               <div className="order-1 lg:order-2">
                 <div className="relative rounded-lg overflow-hidden bg-white shadow-soft border border-neutral-200">
-                  <div className="aspect-video">
+                  <div className="aspect-video lg:aspect-[16/10]">
                     <ImageSlider
                       items={heroSlides}
                       autoPlay={true}

@@ -52,7 +52,7 @@ export function Header() {
 
   return (
     <header 
-      className="bg-white/95 backdrop-blur-md border-b border-neutral-200/50 sticky top-0 z-50 shadow-soft safe-top"
+      className="bg-white/95 backdrop-blur-md border-b border-neutral-200/50 sticky top-0 z-50 shadow-soft safe-top md:pt-0"
       onKeyDown={handleKeyDown}
     >
       <nav 
