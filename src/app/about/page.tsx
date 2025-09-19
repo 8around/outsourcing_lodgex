@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { SkipLinks } from '@/components/common/SkipLinks';
-import { CeoMessage } from './components/CeoMessage';
-import { OrganizationChart } from './components/OrganizationChart';
+import { CeoMessage } from '../../components/about/CeoMessage';
+import { OrganizationChart } from '../../components/about/OrganizationChart';
 
 export const metadata: Metadata = {
   title: '회사 소개',

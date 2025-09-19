@@ -7,15 +7,13 @@ import {
 } from "@/services/admin/documents";
 import { formatFileSize } from "@/services/admin/storage";
 import { Button } from "@/components/ui";
-import LoadingSpinner from "@/components/admin/LoadingSpinner";
-import { Download, Trash2 } from "lucide-react";
+import { Download, Plus, Trash2 } from "lucide-react";
 
 export default function DocumentsPage() {
   const [documents, setDocuments] = useState<CompanyDocument[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
-  const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
 
   useEffect(() => {
     loadDocuments();
@@ -59,10 +57,11 @@ export default function DocumentsPage() {
   };
 
   const handleDeleteDocument = async (fileName: string) => {
+    if (!confirm("정말 삭제하시겠습니까?")) return;
+
     try {
       await documentService.deleteCompanyDocument(fileName);
       await loadDocuments(); // 목록 새로고침
-      setDeleteConfirm(null);
     } catch (error) {
       console.error("문서 삭제 실패:", error);
       alert("문서 삭제에 실패했습니다.");
@@ -87,49 +86,40 @@ export default function DocumentsPage() {
   };
 
   return (
-    <div className="p-6">
+    <div className="space-y-6">
       {/* 헤더 */}
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">
-          회사 소개서 관리
-        </h1>
-        <p className="text-gray-600">
-          회사 소개서 파일을 업로드하고 관리할 수 있습니다. 업로드된 파일 중
-          가장 최신 파일을 방문자들이 다운로드 합니다.
-        </p>
-      </div>
-
-      {/* 파일 업로드 섹션 */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6 mb-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">
-          새 파일 업로드
-        </h2>
-
-        <div className="space-y-4">
-          <div>
-            <input
-              id="file-upload"
-              type="file"
-              onChange={handleFileUpload}
-              disabled={isUploading}
-              className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-600 file:text-white hover:file:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
-            />
-          </div>
-
-          {isUploading && (
-            <div className="flex items-center gap-2 text-blue-600">
-              <LoadingSpinner size="sm" />
-              <span>업로드 중...</span>
-            </div>
-          )}
-
-          {uploadError && (
-            <div className="text-red-600 text-sm bg-red-50 p-3 rounded-lg">
-              {uploadError}
-            </div>
-          )}
+      <div className="flex justify-between items-center">
+        <div>
+          <h1 className="text-2xl font-bold text-white">회사 소개서 관리</h1>
+          <p className="text-sm text-gray-400 mt-1">
+            회사 소개서 파일을 업로드하고 관리할 수 있습니다. 업로드된 파일 중
+            가장 최신 파일을 방문자들이 다운로드 합니다.
+          </p>
+        </div>
+        <div className="relative">
+          <input
+            id="file-upload"
+            type="file"
+            onChange={handleFileUpload}
+            disabled={isUploading}
+            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer disabled:cursor-not-allowed"
+          />
+          <button
+            disabled={isUploading}
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <Plus className="w-4 h-4" />
+            <span>{isUploading ? "업로드 중..." : "파일 업로드"}</span>
+          </button>
         </div>
       </div>
+
+      {/* 업로드 에러 표시 */}
+      {uploadError && (
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+          <div className="text-red-800">{uploadError}</div>
+        </div>
+      )}
 
       {/* 파일 목록 테이블 */}
       <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
@@ -184,31 +174,12 @@ export default function DocumentsPage() {
                         <Download className="w-4 h-4" />
                       </button>
 
-                      {deleteConfirm === doc.name ? (
-                        <div className="flex items-center gap-2">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => setDeleteConfirm(null)}
-                          >
-                            취소
-                          </Button>
-                          <Button
-                            size="sm"
-                            onClick={() => handleDeleteDocument(doc.name)}
-                            className="bg-red-600 hover:bg-red-700 text-white"
-                          >
-                            삭제
-                          </Button>
-                        </div>
-                      ) : (
-                        <button
-                          onClick={() => setDeleteConfirm(doc.name)}
-                          className="text-red-600 hover:text-red-900"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      )}
+                      <button
+                        onClick={() => handleDeleteDocument(doc.name)}
+                        className="text-red-600 hover:text-red-900"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
                     </div>
                   </td>
                 </tr>

@@ -107,9 +107,9 @@ export default function HomePage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
                 {
-                  title: '검증된 전문가 네트워크 (프로필)',
+                  title: '검증된 전문가 네트워크',
                   description:
-                    '관광호텔, 중소형 호텔, 리조트, 일반호텔 등 숙박업 운영 분야의 검증된 전문가들과 직접 연결하여 최고 수준의 컨설팅 서비스를 제공합니다.',
+                    '숙박업 운영 분야의 검증된 전문가들과 직접 연결하여 최고 수준의 컨설팅 서비스를 제공합니다.',
                   icon: (
                     <svg
                       className="w-6 h-6 text-primary"

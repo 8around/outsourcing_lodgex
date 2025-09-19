@@ -65,7 +65,6 @@ export default function PartnersPage() {
       setStats(statsData);
     } catch (error) {
       console.error("파트너사 목록 조회 중 오류:", error);
-      alert("파트너사 목록을 불러오는 중 오류가 발생했습니다.");
     } finally {
       setLoading(false);
     }
@@ -95,7 +94,6 @@ export default function PartnersPage() {
     try {
       await partnersService.deletePartner(id);
       fetchPartners();
-      alert("파트너사가 삭제되었습니다.");
     } catch (error) {
       console.error("파트너사 삭제 중 오류:", error);
       alert("삭제 중 오류가 발생했습니다.");
@@ -154,10 +152,8 @@ export default function PartnersPage() {
       setSaving(true);
       if (editingPartner) {
         await partnersService.updatePartner(editingPartner.id, formData);
-        alert("파트너사가 수정되었습니다.");
       } else {
         await partnersService.createPartner(formData);
-        alert("파트너사가 생성되었습니다.");
       }
       handleCloseModal();
       fetchPartners();
@@ -175,13 +171,13 @@ export default function PartnersPage() {
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-2xl font-bold text-white">파트너사 관리</h1>
-          <p className="text-gray-400 mt-1">
+          <p className="text-sm text-gray-400 mt-1">
             메인페이지에 표시될 파트너사를 관리합니다.
           </p>
         </div>
         <button
           onClick={() => setShowCreateModal(true)}
-          className="bg-[#D4B98B] text-white px-4 py-2 rounded-lg hover:bg-[#C5A572] transition-colors flex items-center space-x-2"
+          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
         >
           <Plus className="w-4 h-4" />
           <span>파트너사 추가</span>
@@ -189,32 +185,32 @@ export default function PartnersPage() {
       </div>
 
       {/* 통계 카드 */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-[#1C2A44] rounded-lg p-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="bg-white p-4 rounded-lg border border-gray-200">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-400 text-sm">전체 파트너사</p>
-              <p className="text-2xl font-bold text-white">{stats.total}</p>
+              <p className="text-sm text-gray-600">전체 파트너사</p>
+              <p className="text-2xl font-bold text-gray-900">{stats.total}</p>
             </div>
-            <Building2 className="w-8 h-8 text-[#D4B98B]" />
+            <Building2 className="w-8 h-8 text-blue-400" />
           </div>
         </div>
-        <div className="bg-[#1C2A44] rounded-lg p-6">
+        <div className="bg-white p-4 rounded-lg border border-gray-200">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-400 text-sm">활성 파트너사</p>
-              <p className="text-2xl font-bold text-green-400">
+              <p className="text-sm text-gray-600">활성 파트너사</p>
+              <p className="text-2xl font-bold text-green-600">
                 {stats.active}
               </p>
             </div>
             <Check className="w-8 h-8 text-green-400" />
           </div>
         </div>
-        <div className="bg-[#1C2A44] rounded-lg p-6">
+        <div className="bg-white p-4 rounded-lg border border-gray-200">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-400 text-sm">비활성 파트너사</p>
-              <p className="text-2xl font-bold text-gray-400">
+              <p className="text-sm text-gray-600">비활성 파트너사</p>
+              <p className="text-2xl font-bold text-gray-600">
                 {stats.inactive}
               </p>
             </div>
@@ -224,81 +220,81 @@ export default function PartnersPage() {
       </div>
 
       {/* 검색 및 필터 */}
-      <div className="bg-[#1C2A44] rounded-lg p-6">
+      <div className="bg-white p-4 rounded-lg border border-gray-200">
         <div className="flex flex-col md:flex-row gap-4">
-          <div className="flex-1 flex space-x-2">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-              <input
-                type="text"
-                placeholder="파트너사 이름으로 검색..."
-                value={searchInput}
-                onChange={(e) => setSearchInput(e.target.value)}
-                onKeyPress={handleSearchKeyPress}
-                className="w-full pl-10 pr-4 py-2 bg-[#0f0f23] border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-[#D4B98B]"
-              />
+          <div className="flex-1">
+            <div className="flex gap-2">
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <input
+                  type="text"
+                  placeholder="파트너사 이름으로 검색..."
+                  value={searchInput}
+                  onChange={(e) => setSearchInput(e.target.value)}
+                  onKeyPress={handleSearchKeyPress}
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+              <button
+                onClick={handleSearch}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+              >
+                <Search className="w-4 h-4" />
+                검색
+              </button>
             </div>
-            <button
-              onClick={handleSearch}
-              className="px-4 py-2 bg-[#D4B98B] text-white rounded-lg hover:bg-[#C5A572] transition-colors"
-            >
-              검색
-            </button>
           </div>
-          <div className="flex items-center space-x-2">
-            <Filter className="w-4 h-4 text-gray-400" />
-            <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              className="bg-[#0f0f23] border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-[#D4B98B]"
-            >
-              <option value="">전체 상태</option>
-              <option value="active">활성</option>
-              <option value="inactive">비활성</option>
-            </select>
-          </div>
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">전체 상태</option>
+            <option value="active">활성</option>
+            <option value="inactive">비활성</option>
+          </select>
         </div>
       </div>
 
       {/* 파트너사 목록 */}
-      <div className="bg-[#1C2A44] rounded-lg overflow-hidden">
+      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
         {loading ? (
           <div className="p-8 text-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#D4B98B] mx-auto"></div>
-            <p className="text-gray-400 mt-2">로딩 중...</p>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+            <p className="text-gray-600 mt-2">로딩 중...</p>
           </div>
         ) : partners.length === 0 ? (
           <div className="p-8 text-center">
             <Building2 className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-            <p className="text-gray-400">파트너사가 없습니다.</p>
+            <p className="text-gray-600">파트너사가 없습니다.</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-[#0f0f23]">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     파트너사
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     상태
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     순서
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     생성일
                   </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-400 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                     작업
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-700">
+              <tbody className="divide-y divide-gray-200">
                 {partners.map((partner) => (
                   <tr
                     key={partner.id}
-                    className="hover:bg-[#0f0f23] transition-colors"
+                    className="hover:bg-gray-50 transition-colors"
                   >
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
@@ -306,15 +302,15 @@ export default function PartnersPage() {
                           <img
                             src={partner.image_url}
                             alt={partner.name}
-                            className="h-10 w-10 rounded-lg object-cover mr-3"
+                            className="h-10 w-10 border border-gray-200 rounded-lg object-cover mr-3"
                           />
                         ) : (
-                          <div className="h-10 w-10 bg-gray-600 rounded-lg flex items-center justify-center mr-3">
+                          <div className="h-10 w-10 bg-gray-200 rounded-lg flex items-center justify-center mr-3">
                             <Building2 className="w-5 h-5 text-gray-400" />
                           </div>
                         )}
                         <div>
-                          <div className="text-sm font-medium text-white">
+                          <div className="text-sm font-medium text-gray-900">
                             {partner.name}
                           </div>
                         </div>
@@ -331,10 +327,10 @@ export default function PartnersPage() {
                         {partner.is_active ? "활성" : "비활성"}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {partner.display_order}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {partner.created_at
                         ? new Date(partner.created_at).toLocaleDateString(
                             "ko-KR",
@@ -379,11 +375,11 @@ export default function PartnersPage() {
           <button
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
             disabled={currentPage === 1}
-            className="px-3 py-2 rounded-lg bg-[#1C2A44] text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#2A3F5F] transition-colors"
+            className="px-3 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
           >
             이전
           </button>
-          <span className="px-4 py-2 text-white">
+          <span className="px-4 py-2 text-gray-700">
             {currentPage} / {totalPages}
           </span>
           <button
@@ -391,7 +387,7 @@ export default function PartnersPage() {
               setCurrentPage((prev) => Math.min(prev + 1, totalPages))
             }
             disabled={currentPage === totalPages}
-            className="px-3 py-2 rounded-lg bg-[#1C2A44] text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#2A3F5F] transition-colors"
+            className="px-3 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
           >
             다음
           </button>
@@ -401,14 +397,14 @@ export default function PartnersPage() {
       {/* 생성/수정 모달 */}
       {showCreateModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-[#1C2A44] rounded-lg p-6 w-full max-w-md">
+          <div className="bg-white rounded-lg p-6 w-full max-w-md">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl font-bold text-white">
+              <h2 className="text-xl font-bold text-gray-900">
                 {editingPartner ? "파트너사 수정" : "파트너사 추가"}
               </h2>
               <button
                 onClick={handleCloseModal}
-                className="text-gray-400 hover:text-white transition-colors"
+                className="text-gray-400 hover:text-gray-600 transition-colors"
               >
                 <X className="w-6 h-6" />
               </button>
@@ -416,7 +412,7 @@ export default function PartnersPage() {
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   파트너사 이름 *
                 </label>
                 <input
@@ -425,13 +421,13 @@ export default function PartnersPage() {
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, name: e.target.value }))
                   }
-                  className="w-full px-3 py-2 bg-[#0f0f23] border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-[#D4B98B]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   placeholder="파트너사 이름을 입력하세요"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   로고 이미지
                 </label>
                 <div className="space-y-2">
@@ -440,7 +436,7 @@ export default function PartnersPage() {
                     accept="image/*"
                     onChange={handleImageUpload}
                     disabled={uploading}
-                    className="w-full px-3 py-2 bg-[#0f0f23] border border-gray-700 rounded-lg text-white file:bg-[#D4B98B] file:text-white file:border-0 file:rounded file:px-3 file:py-1 file:mr-3"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 file:bg-blue-600 file:text-white file:border-0 file:rounded file:px-3 file:py-1 file:mr-3"
                   />
                   {formData.image_url && (
                     <div className="flex items-center justify-center">
@@ -452,13 +448,13 @@ export default function PartnersPage() {
                     </div>
                   )}
                   {uploading && (
-                    <p className="text-sm text-gray-400">업로드 중...</p>
+                    <p className="text-sm text-gray-600">업로드 중...</p>
                   )}
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   표시 순서
                 </label>
                 <input
@@ -470,7 +466,7 @@ export default function PartnersPage() {
                       display_order: parseInt(e.target.value) || 0,
                     }))
                   }
-                  className="w-full px-3 py-2 bg-[#0f0f23] border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-[#D4B98B]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   placeholder="0"
                 />
               </div>
@@ -488,7 +484,7 @@ export default function PartnersPage() {
                   }
                   className="mr-2"
                 />
-                <label htmlFor="is_active" className="text-sm text-gray-300">
+                <label htmlFor="is_active" className="text-sm text-gray-700">
                   메인페이지에 표시
                 </label>
               </div>
@@ -497,14 +493,14 @@ export default function PartnersPage() {
             <div className="flex justify-end space-x-3 mt-6">
               <button
                 onClick={handleCloseModal}
-                className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors"
               >
                 취소
               </button>
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="px-4 py-2 bg-[#D4B98B] text-white rounded-lg hover:bg-[#C5A572] transition-colors disabled:opacity-50"
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
               >
                 {saving ? "저장 중..." : "저장"}
               </button>

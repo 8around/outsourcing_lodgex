@@ -110,7 +110,7 @@ export default function InsightsPage() {
       <main className="flex-1">
         <BoardHeader
           title="인사이트 허브"
-          description="호텔 업계의 최신 트렌드와 전문 지식을 공유합니다. 성공적인 호텔 운영을 위한 인사이트를 확인하세요."
+          description="숙박업계의 최신 트렌드와 전문 지식을 공유합니다.<br/>성공적인 숙박업 운영을 위한 인사이트를 확인하세요."
           totalPosts={totalPosts}
         />
         
