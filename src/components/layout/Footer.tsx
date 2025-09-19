@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { CompanyDocumentDownload } from '@/components/ui';
 
 const footerData = {
   quickLinks: [
@@ -52,6 +53,9 @@ export function Footer() {
                   <p className="text-sm text-primary-200">{footerData.contact.email}</p>
                 </div>
               </div>
+
+              {/* 회사 소개서 다운로드 버튼 */}
+              <CompanyDocumentDownload />
 
             </div>
 

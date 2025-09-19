@@ -11,3 +11,4 @@ export {
 export { Input, Textarea } from './Input';
 export { ImageSlider } from './ImageSlider';
 export { Checkbox } from './Checkbox';
+export { CompanyDocumentDownload } from './CompanyDocumentDownload';
