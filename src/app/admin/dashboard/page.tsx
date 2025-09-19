@@ -8,7 +8,7 @@ export default async function AdminDashboard() {
   const [
     { count: insightsCount },
     { count: eventsCount }, 
-    { count: testimonialsCount },
+    /* { count: testimonialsCount }, */
     { count: serviceRequestsCount }
   ] = await Promise.all([
     supabase
@@ -21,11 +21,11 @@ export default async function AdminDashboard() {
       .select('*', { count: 'exact', head: true })
       .eq('post_type', 'events')
       .eq('status', 'published'),
-    supabase
+    /* supabase
       .from('posts')
       .select('*', { count: 'exact', head: true })
       .eq('post_type', 'testimonials')
-      .eq('status', 'published'),
+      .eq('status', 'published'), */
     supabase
       .from('service_requests')
       .select('*', { count: 'exact', head: true })
@@ -61,7 +61,7 @@ export default async function AdminDashboard() {
       ),
       color: 'bg-green-500',
     },
-    {
+    /* {
       name: '고객 후기',
       value: testimonialsCount || 0,
       href: '/admin/testimonials',
@@ -71,7 +71,7 @@ export default async function AdminDashboard() {
         </svg>
       ),
       color: 'bg-purple-500',
-    },
+    }, */
     {
       name: '서비스 신청',
       value: serviceRequestsCount || 0,
@@ -209,7 +209,7 @@ export default async function AdminDashboard() {
                 </div>
               </Link>
 
-              <Link
+             {/*  <Link
                 href="/admin/testimonials/new"
                 className="flex items-center p-4 bg-purple-50 hover:bg-purple-100 rounded-lg transition-colors group"
               >
@@ -222,7 +222,7 @@ export default async function AdminDashboard() {
                   <p className="font-medium text-gray-900">새 고객 후기 추가</p>
                   <p className="text-sm text-gray-600">성공 사례를 소개하세요</p>
                 </div>
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>

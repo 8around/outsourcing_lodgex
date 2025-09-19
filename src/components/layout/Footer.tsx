@@ -7,7 +7,7 @@ const footerData = {
     { name: '서비스', href: '/services' },
     { name: '인사이트', href: '/insights' },
     { name: '이벤트', href: '/events' },
-    { name: '고객후기', href: '/testimonials' },
+    { name: '회사소개', href: '/about' },
     { name: '문의하기', href: '/contact' },
   ],
   contact: {

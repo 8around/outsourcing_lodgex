@@ -8,8 +8,7 @@ const navigation = [
   { name: '서비스', href: '/services' },
   { name: '인사이트', href: '/insights' },
   { name: '이벤트', href: '/events' },
-  { name: '고객후기', href: '/testimonials' },
-  { name: '문의', href: '/contact' },
+  { name: '회사소개', href: '/about' },
 ];
 
 export function Header() {
@@ -103,9 +102,9 @@ export function Header() {
             <Link
               href="/contact"
               className="btn-primary text-sm lg:text-base font-semibold"
-              aria-label="컨설팅 요청하기"
+              aria-label="컨설팅 신청하기"
             >
-              컨설팅 요청
+              컨설팅 신청
             </Link>
           </div>
 
@@ -193,7 +192,7 @@ export function Header() {
                 onClick={() => setIsMenuOpen(false)}
                 aria-label="컨설팅 요청하기"
               >
-                컨설팅 요청
+                컨설팅 신청
               </Link>
             </div>
           </div>
