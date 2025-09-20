@@ -29,7 +29,8 @@ export function ServiceCategories({
             사업 영역
           </h2>
           <p className="text-lg text-neutral-600 max-w-3xl mx-auto">
-            숙박업 운영의 모든 영역에서 전문적이고 차별화된 서비스를 제공합니다.
+            숙박업(관광호텔, 중소형호텔, 리조트, 일반호텔) 운영의 모든 영역에서<br />
+            전문적이고 차별화된 서비스를 제공합니다.
           </p>
         </div>
 

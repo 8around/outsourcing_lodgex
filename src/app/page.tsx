@@ -109,7 +109,7 @@ export default function HomePage() {
                 {
                   title: '검증된 전문가 네트워크',
                   description:
-                    '숙박업 운영 분야의 검증된 전문가들과 직접 연결하여 최고 수준의 컨설팅 서비스를 제공합니다.',
+                    '숙박업(관광호텔, 중소형호텔, 리조트, 일반호텔) 운영 분야의 검증된 전문가들과 직접 연결하여 최고 수준의 컨설팅 서비스를 제공합니다.',
                   icon: (
                     <svg
                       className="w-6 h-6 text-primary"
@@ -202,12 +202,13 @@ export default function HomePage() {
         >
           <div className="container-max section-padding">
             <div className="text-center text-white max-w-4xl mx-auto">
-              <h2 
+              <h3
                 id="cta-title"
                 className="font-sans font-semibold mb-6 text-white"
               >
-                숙박업 운영 전문가와 연결해보세요
-              </h2>
+                숙박업(관광호텔, 중소형호텔, 리조트, 일반호텔)<br />
+                운영 전문가와 연결해보세요
+              </h3>
               <p className="text-xl mb-10 text-white/90 leading-relaxed">
                 검증된 전문가와의 상담을 통해 귀하의 숙박업 운영 방식을 
                 혁신해보세요. 전문적인 진단부터 실행까지 함께합니다.
