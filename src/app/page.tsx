@@ -3,27 +3,25 @@ import { Footer } from '@/components/layout/Footer';
 import { ImageSlider } from '@/components/ui';
 import { SkipLinks } from '@/components/common/SkipLinks';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
+import { PartnersSection } from '@/components/home/PartnersSection';
 import Link from 'next/link';
 
 const heroSlides = [
   {
     id: 1,
-    image:
-      'https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1932&q=80',
-    alt: '럭셔리 호텔 로비',
+    image: '/images/hero/hotel-lobby-1.png',
+    alt: '전문적이고 럭셔리한 호텔 로비'
   },
   {
     id: 2,
-    image:
-      'https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1932&q=80',
-    alt: '호텔 비즈니스 미팅',
+    image: '/images/hero/hotel-restaurant-3.png',
+    alt: '고급 호텔 파인다이닝 레스토랑',
   },
   {
     id: 3,
-    image:
-      'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1950&q=80',
-    alt: '고급 호텔 레스토랑',
-  },
+    image: '/images/hero/hotel-room-2.png',
+    alt: '호텔 객실',
+  }
 ];
 
 export default function HomePage() {
@@ -45,25 +43,25 @@ export default function HomePage() {
               {/* Content Side */}
               <div className="order-2 lg:order-1">
                 <h1 className="font-sans font-semibold text-neutral-800 mb-6 text-balance leading-tight">
-                  호텔 운영 전문가와{' '}
-                  <span className="text-primary">직접 연결되는</span>{' '}
+                  숙박업 운영 전문가와&nbsp;<br className='hidden lg:block'/>
+                  <span className="text-primary">직접 연결되는</span>&nbsp;<br className='hidden lg:block'/>
                   전문 플랫폼
                 </h1>
                 <p className="text-lg text-neutral-400 mb-8 leading-relaxed">
-                  검증된 호텔 운영 전문가들과의 직접적인 연결을 통해 최고 수준의 
+                  <strong>관광호텔, 중소형 호텔, 리조트, 일반호텔 등</strong> 검증된 숙박업 운영 전문가들과의 연결을 통해 최고 수준의 
                   컨설팅과 위탁운영 서비스를 제공합니다.
                 </p>
                 <div className="flex flex-col xs:flex-row gap-4">
                   <Link
                     href="/services#contact-form"
-                    className="btn-primary text-base font-medium px-8 py-3"
+                    className="btn-primary text-xs sm:text-base font-medium px-4 sm:px-8 py-3"
                     aria-label="컨설팅 요청하기"
                   >
                     전문가와 연결하기
                   </Link>
                   <Link
                     href="/services"
-                    className="btn-outline text-base font-medium px-8 py-3"
+                    className="btn-outline text-xs sm:text-base font-medium px-4 sm:px-8 py-3"
                     aria-label="서비스 상세 정보 보기"
                   >
                     서비스 둘러보기
@@ -74,7 +72,7 @@ export default function HomePage() {
               {/* LinkedIn-style Image Slider */}
               <div className="order-1 lg:order-2">
                 <div className="relative rounded-lg overflow-hidden bg-white shadow-soft border border-neutral-200">
-                  <div className="aspect-video">
+                  <div className="aspect-video lg:aspect-[16/10]">
                     <ImageSlider
                       items={heroSlides}
                       autoPlay={true}
@@ -98,11 +96,11 @@ export default function HomePage() {
                 id="features-title"
                 className="font-sans font-semibold text-neutral-800 mb-6"
               >
-                전문적인 호텔 운영 솔루션
+                전문적인 숙박업 운영 솔루션
               </h2>
               <p className="text-lg text-neutral-400 max-w-3xl mx-auto leading-relaxed">
                 검증된 전문가 네트워크와 데이터 기반 접근법으로 
-                호텔 운영의 새로운 기준을 제시합니다.
+                숙박업 운영의 새로운 기준을 제시합니다.
               </p>
             </div>
 
@@ -111,7 +109,7 @@ export default function HomePage() {
                 {
                   title: '검증된 전문가 네트워크',
                   description:
-                    '호텔 운영 분야의 검증된 전문가들과 직접 연결하여 최고 수준의 컨설팅 서비스를 제공합니다.',
+                    '숙박업(관광호텔, 중소형호텔, 리조트, 일반호텔) 운영 분야의 검증된 전문가들과 직접 연결하여 최고 수준의 컨설팅 서비스를 제공합니다.',
                   icon: (
                     <svg
                       className="w-6 h-6 text-primary"
@@ -131,7 +129,7 @@ export default function HomePage() {
                 {
                   title: '맞춤형 운영 전략',
                   description:
-                    '각 호텔의 특성과 목표에 맞춘 개별화된 운영 전략과 실행 계획을 수립합니다.',
+                    '숙박업체의 특성과 목표에 맞춘 개별화된 운영 전략과 실행 계획을 수립합니다.',
                   icon: (
                     <svg
                       className="w-6 h-6 text-primary"
@@ -151,7 +149,7 @@ export default function HomePage() {
                 {
                   title: '데이터 기반 성과 관리',
                   description:
-                    'KPI 중심의 체계적인 성과 측정과 지속적인 개선을 통해 확실한 결과를 보장합니다.',
+                    'KPI 중심의 체계적인 성과 측정과 지속적인 개선을 통해 맞춤형 개선전략으로 경쟁력을 강화하고 미래를 준비합니다.',
                   icon: (
                     <svg
                       className="w-6 h-6 text-primary"
@@ -197,7 +195,6 @@ export default function HomePage() {
           </div>
         </section>
 
-
         {/* LinkedIn-style Professional CTA Section */}
         <section 
           className="py-20 bg-primary"
@@ -205,14 +202,15 @@ export default function HomePage() {
         >
           <div className="container-max section-padding">
             <div className="text-center text-white max-w-4xl mx-auto">
-              <h2 
+              <h3
                 id="cta-title"
                 className="font-sans font-semibold mb-6 text-white"
               >
-                호텔 운영 전문가와 연결해보세요
-              </h2>
-              <p className="text-xl mb-10 text-white/90 leading-relaxed">
-                검증된 전문가와의 상담을 통해 귀하의 호텔 운영 방식을 
+                숙박업(관광호텔, 중소형호텔, 리조트, 일반호텔)<br />
+                운영 전문가와 연결해보세요
+              </h3>
+              <p className="text-lg md:text-xl mb-10 text-white/90 leading-relaxed">
+                검증된 전문가와의 상담을 통해 귀하의 숙박업 운영 방식을 
                 혁신해보세요. 전문적인 진단부터 실행까지 함께합니다.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -234,6 +232,9 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+
+        {/* Partners Section */}
+        <PartnersSection />
       </main>
 
       <Footer />

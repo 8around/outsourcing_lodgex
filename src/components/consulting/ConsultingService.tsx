@@ -32,14 +32,15 @@ export function ConsultingService({ className }: ConsultingServiceProps) {
         <div className="absolute inset-0 bg-black/30"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-sans font-bold mb-6 drop-shadow-lg">
-              호텔 위탁운영 &<br />
-              전문 컨설팅
+            <h1 className="text-3xl lg:text-4xl font-sans font-bold mb-6 drop-shadow-lg">
+              숙박업(관광호텔, 중소형호텔, 리조트, 일반호텔)<br />
+              위탁운영 & 전문 컨설팅
             </h1>
-            <p className="text-xl md:text-2xl text-white/95 mb-8 leading-relaxed drop-shadow">
-              체계적인 운영 시스템과 전문적인 컨설팅으로
+            <p className="text-xl lg:text-2xl text-white/95 mb-8 leading-relaxed drop-shadow">
+              체계적인 숙박업(관광호텔, 중소형호텔, 리조트, 일반호텔) 운영 시스템과 전문적인 컨설팅으로
               <br />
-              호텔의 가치를 극대화하고 지속 가능한 성장을 실현합니다
+              숙박업(관광호텔, 중소형호텔, 리조트, 일반호텔)의 가치와 수익을 극대화하고<br />
+              지속 가능한 경영관리를 실현합니다
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
@@ -74,8 +75,8 @@ export function ConsultingService({ className }: ConsultingServiceProps) {
               왜 Lodgex를 선택해야 할까요?
             </h2>
             <p className="text-lg text-neutral-600 max-w-3xl mx-auto">
-              호텔업계 전문가들의 풍부한 경험과 체계적인 접근법으로 귀하의
-              호텔이 지속적으로 성장할 수 있도록 지원합니다.
+              숙박업(관광호텔, 중소형호텔, 리조트, 일반호텔) 업계 전문가들의 풍부한 경험과 체계적인 접근법,<br />
+              역량있는 파트너사와 함께 귀하의 숙박업(관광호텔, 중소형호텔, 리조트, 일반호텔)의 경쟁력을 지속적으로 강화하고 지속가능경영을 지원합니다.
             </p>
           </div>
 
@@ -92,7 +93,7 @@ export function ConsultingService({ className }: ConsultingServiceProps) {
               </h3>
               <p className="text-neutral-600">
                 정확한 데이터 분석을 바탕으로 객관적이고 실용적인 개선안을
-                제시합니다.
+                제시
               </p>
             </Card>
 
@@ -119,11 +120,10 @@ export function ConsultingService({ className }: ConsultingServiceProps) {
                 <span className="text-2xl">🚀</span>
               </div>
               <h3 className="text-xl font-bold text-primary mb-4">
-                지속적 성장
+                동반 지속적 성장
               </h3>
               <p className="text-neutral-600">
-                일회성 컨설팅이 아닌 장기적 파트너십을 통해 지속 가능한 성장을
-                지원합니다.
+                맞춤형 컨설팅으로 지속가능한 경쟁력 확보로 장기적 가치 창출을 목표로 일회성 컨설팅이 아닌 장기적 파트너십을 통해 지속 가능한 성장을 지원합니다.
               </p>
             </Card>
           </div>
@@ -147,7 +147,7 @@ export function ConsultingService({ className }: ConsultingServiceProps) {
             지금 바로 시작하세요
           </h2>
           <p className="text-xl text-primary-100 mb-8">
-            전문 컨설턴트와의 무료 상담을 통해 호텔의 새로운 가능성을
+            전문 숙박업 컨설턴트와의 무료 상담을 통해 새로운 가능성을
             발견해보세요.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

@@ -213,7 +213,7 @@ export class StorageService {
   }
 
   // 파일명 생성
-  private generateFileName(file: File, customName?: string): string {
+  protected generateFileName(file: File, customName?: string): string {
     const timestamp = Date.now()
     const random = Math.random().toString(36).substring(2, 8)
     const extension = file.name.split('.').pop()

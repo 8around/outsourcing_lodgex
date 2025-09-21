@@ -5,9 +5,11 @@
 게시판 타입 (post_type)
   └── 카테고리 (categories)
       └── 게시글 (posts)
+
+파트너사 (partners) - 독립적 테이블
 ```
 
-## 🗂️ 테이블 구조 (4개 테이블)
+## 🗂️ 테이블 구조 (5개 테이블)
 
 ### 1. admins (관리자 테이블)
 ```sql
@@ -129,6 +131,23 @@ CREATE INDEX idx_service_requests_status ON service_requests(status);
 CREATE INDEX idx_service_requests_created ON service_requests(created_at DESC);
 ```
 
+### 5. partners (파트너사 테이블)
+```sql
+CREATE TABLE partners (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),    -- 파트너사 고유 식별자 (UUID)
+  name TEXT NOT NULL,                               -- 파트너사 이름
+  image_url TEXT,                                   -- 파트너사 로고 이미지 URL
+  is_active BOOLEAN DEFAULT true,                   -- 메인페이지 표시 여부
+  display_order INTEGER DEFAULT 0,                  -- 파트너사 표시 순서 (오름차순)
+  created_at TIMESTAMPTZ DEFAULT NOW(),             -- 파트너사 등록 일시
+  updated_at TIMESTAMPTZ DEFAULT NOW()              -- 파트너사 수정 일시
+);
+
+-- 인덱스
+CREATE INDEX idx_partners_is_active ON partners(is_active);
+CREATE INDEX idx_partners_display_order ON partners(display_order);
+```
+
 ## 🔐 Row Level Security (RLS) 정책
 
 ### admins 테이블
@@ -231,6 +250,40 @@ CREATE POLICY "Admins can delete service requests"
   USING (public.is_admin());
 ```
 
+### partners 테이블
+```sql
+-- RLS 활성화
+ALTER TABLE partners ENABLE ROW LEVEL SECURITY;
+
+-- 모든 사용자가 활성 파트너사 조회 가능
+CREATE POLICY "Anyone can view active partners" 
+  ON partners FOR SELECT 
+  USING (is_active = true);
+
+-- 관리자는 모든 파트너사 조회 가능
+CREATE POLICY "Admins can view all partners" 
+  ON partners FOR SELECT 
+  TO authenticated
+  USING (public.is_admin());
+
+-- 관리자만 파트너사 생성/수정/삭제 가능
+CREATE POLICY "Admins can insert partners" 
+  ON partners FOR INSERT 
+  TO authenticated
+  WITH CHECK (public.is_admin());
+
+CREATE POLICY "Admins can update partners" 
+  ON partners FOR UPDATE 
+  TO authenticated
+  USING (public.is_admin())
+  WITH CHECK (public.is_admin());
+
+CREATE POLICY "Admins can delete partners" 
+  ON partners FOR DELETE 
+  TO authenticated
+  USING (public.is_admin());
+```
+
 ## 🔄 트리거 및 함수
 
 ### 자동 업데이트 타임스탬프
@@ -251,6 +304,9 @@ CREATE TRIGGER update_posts_updated_at BEFORE UPDATE ON posts
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
 CREATE TRIGGER update_service_requests_updated_at BEFORE UPDATE ON service_requests
+  FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_partners_updated_at BEFORE UPDATE ON partners
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 ```
 
@@ -454,6 +510,27 @@ WHERE status = 'published'
 GROUP BY tag
 ORDER BY usage_count DESC
 LIMIT 20;
+```
+
+### 활성 파트너사 조회 (메인페이지용)
+```sql
+SELECT 
+  id,
+  name,
+  image_url,
+  display_order
+FROM partners
+WHERE is_active = true
+ORDER BY display_order ASC;
+```
+
+### 파트너사 통계 조회
+```sql
+SELECT 
+  COUNT(*) as total,
+  COUNT(*) FILTER (WHERE is_active = true) as active,
+  COUNT(*) FILTER (WHERE is_active = false) as inactive
+FROM partners;
 ```
 
 ## 📊 계층 구조 설명

@@ -1,20 +1,21 @@
 'use client';
 
 import Link from 'next/link';
+import { IntroductionDownloadBtn } from '@/components/common/IntroductionDownloadBtn';
 
 const footerData = {
   quickLinks: [
     { name: '서비스', href: '/services' },
     { name: '인사이트', href: '/insights' },
     { name: '이벤트', href: '/events' },
-    { name: '고객후기', href: '/testimonials' },
+    { name: '회사소개', href: '/about' },
     { name: '문의하기', href: '/contact' },
   ],
   contact: {
     phone: '080-727-8899',
     email: 'sjds77@naver.com',
   },
-  philosophy: '최고 수준의 호스피탈리티로 고객의 성공을 지원하며, 혁신적인 솔루션을 통해 호텔 업계의 새로운 기준을 제시합니다.',
+  philosophy: '최고 수준의 호스피탈리티로 고객의 성공을 지원하며, 혁신적인 솔루션을 통해 숙박업의 새로운 기준을 제시합니다.',
 };
 
 export function Footer() {
@@ -52,6 +53,9 @@ export function Footer() {
                   <p className="text-sm text-primary-200">{footerData.contact.email}</p>
                 </div>
               </div>
+
+              {/* 회사 소개서 다운로드 버튼 */}
+              <IntroductionDownloadBtn />
 
             </div>
 

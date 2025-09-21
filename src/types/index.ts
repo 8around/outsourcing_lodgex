@@ -162,6 +162,16 @@ export interface SearchParams {
   sortOrder?: 'asc' | 'desc';
 }
 
+// Partner Types
+export interface Partner {
+  id: string;
+  name: string;
+  image_url: string | null;
+  is_active: boolean | null;
+  display_order: number | null;
+  created_at: string | null;
+}
+
 // API Response Types
 export interface ApiResponse<T = any> {
   success: boolean;

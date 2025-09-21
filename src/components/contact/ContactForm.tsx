@@ -222,7 +222,7 @@ export function ContactForm({ className, onSubmit }: ContactFormProps) {
             컨설팅 신청
           </h2>
           <p className="text-neutral-600">
-            호텔 운영 개선을 위한 전문 컨설팅을 신청하세요. 
+            숙박업 운영 개선을 위한 전문 컨설팅을 신청하세요. 
             담당 전문가가 연락드려 상세한 상담을 진행해드립니다.
           </p>
         </div>
