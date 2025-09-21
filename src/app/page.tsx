@@ -209,7 +209,7 @@ export default function HomePage() {
                 숙박업(관광호텔, 중소형호텔, 리조트, 일반호텔)<br />
                 운영 전문가와 연결해보세요
               </h3>
-              <p className="text-xl mb-10 text-white/90 leading-relaxed">
+              <p className="text-lg md:text-xl mb-10 text-white/90 leading-relaxed">
                 검증된 전문가와의 상담을 통해 귀하의 숙박업 운영 방식을 
                 혁신해보세요. 전문적인 진단부터 실행까지 함께합니다.
               </p>
