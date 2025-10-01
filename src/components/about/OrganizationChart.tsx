@@ -6,8 +6,7 @@ import { useState } from "react";
 export function OrganizationChart() {
   const [imageError, setImageError] = useState(false);
 
-  // Supabase Storage에서 조직도 이미지 URL
-  const organizationImageUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/organization-chart/organization-chart.png`;
+  const organizationImageUrl = `/images/organization-chart/organization-chart.jpg`;
 
   return (
     <section className="py-16 lg:py-24 bg-gray-50">
@@ -50,7 +49,7 @@ export function OrganizationChart() {
 
           {/* Organization Chart Image */}
           <div
-            className="bg-white rounded-2xl shadow-lg p-8 md:p-12"
+            className="bg-white rounded-2xl shadow-lg overflow-hidden"
             role="img"
             aria-labelledby="organization-chart-title"
           >
@@ -61,7 +60,7 @@ export function OrganizationChart() {
                   alt="Lodgex 조직도 - 회사의 체계적인 조직 구조를 보여주는 차트"
                   width={1200}
                   height={800}
-                  className="w-full h-auto rounded-lg shadow-md"
+                  className="w-full h-auto"
                   style={{
                     maxWidth: "100%",
                     height: "auto",

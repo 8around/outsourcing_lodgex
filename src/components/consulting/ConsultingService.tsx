@@ -20,6 +20,7 @@ export function ConsultingService({ className }: ConsultingServiceProps) {
     SERVICE_CATEGORIES.CONSULTING,
     SERVICE_CATEGORIES.ORGANIZATION,
     SERVICE_CATEGORIES.TRAINING,
+    SERVICE_CATEGORIES.EVALUATION_CONSULTING,
   ].map(category => ({
     ...category,
     services: [...category.services],
@@ -60,7 +61,7 @@ export function ConsultingService({ className }: ConsultingServiceProps) {
                 }
                 className="border-white text-white hover:bg-white hover:text-primary"
               >
-                서비스 둘러보기
+                사업분야
               </Button>
             </div>
           </div>

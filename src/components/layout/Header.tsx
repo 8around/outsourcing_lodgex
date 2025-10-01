@@ -5,9 +5,9 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const navigation = [
-  { name: '서비스', href: '/services' },
+  { name: '사업분야', href: '/services' },
   { name: '인사이트', href: '/insights' },
-  { name: '이벤트', href: '/events' },
+  { name: '교육·숙박업 운영정보', href: '/events' },
   { name: '회사소개', href: '/about' },
 ];
 

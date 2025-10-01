@@ -109,7 +109,7 @@ export default function EventsPage() {
       
       <main className="flex-1">
         <BoardHeader
-          title="이벤트 & 교육"
+          title="교육·숙박업 운영정보"
           description="숙박업 전문가를 위한 교육 프로그램, 세미나, 워크샵 정보를 제공합니다.<br/>최고의 숙박업 전문가로 성장하세요."
           totalPosts={totalPosts}
         />

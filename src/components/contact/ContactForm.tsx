@@ -285,7 +285,7 @@ export function ContactForm({ className, onSubmit }: ContactFormProps) {
               서비스 요청사항 <span className="text-red-500">*</span>
             </h3>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {CONSULTING_SERVICE_OPTIONS.map(service => (
                 <div 
                   key={service}
