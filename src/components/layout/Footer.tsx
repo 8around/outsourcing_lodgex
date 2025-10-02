@@ -2,20 +2,16 @@
 
 import Link from 'next/link';
 import { IntroductionDownloadBtn } from '@/components/common/IntroductionDownloadBtn';
+import { COMPANY_INFO } from '@/lib/constants';
 
 const footerData = {
   quickLinks: [
-    { name: '서비스', href: '/services' },
+    { name: '사업분야', href: '/services' },
     { name: '인사이트', href: '/insights' },
-    { name: '이벤트', href: '/events' },
+    { name: '교육·숙박업 운영정보', href: '/events' },
     { name: '회사소개', href: '/about' },
-    { name: '문의하기', href: '/contact' },
+    { name: '컨설팅 신청', href: '/contact' },
   ],
-  contact: {
-    phone: '080-727-8899',
-    email: 'sjds77@naver.com',
-  },
-  philosophy: '최고 수준의 호스피탈리티로 고객의 성공을 지원하며, 혁신적인 솔루션을 통해 숙박업의 새로운 기준을 제시합니다.',
 };
 
 export function Footer() {
@@ -23,7 +19,7 @@ export function Footer() {
     <footer id="footer" className="bg-primary-950 text-white" role="contentinfo">
       <div className="container-max section-padding">
         {/* Main Footer Content */}
-        <div className="py-16 lg:py-20">
+        <div className="pt-16 pb-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Company Info */}
             <div className="lg:col-span-1">
@@ -34,24 +30,26 @@ export function Footer() {
               </Link>
               
               <p className="text-primary-200 leading-relaxed mb-6">
-                {footerData.philosophy}
+                {COMPANY_INFO.philosophy}
               </p>
 
-              {/* Contact Information */}
-              <div className="space-y-3 mb-8">
-                <div className="flex items-center gap-3">
-                  <svg className="h-5 w-5 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                  </svg>
-                  <p className="text-sm text-primary-200">{footerData.contact.phone}</p>
-                </div>
-
-                <div className="flex items-center gap-3">
-                  <svg className="h-5 w-5 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                  <p className="text-sm text-primary-200">{footerData.contact.email}</p>
-                </div>
+              {/* Company Information */}
+              <div className="space-y-2 mb-6 text-sm text-primary-200">
+                <p>
+                  <span className="font-semibold text-white">대표</span> {COMPANY_INFO.ceo}
+                </p>
+                <p>
+                  <span className="font-semibold text-white">사업자등록증</span> {COMPANY_INFO.businessNumber} | <span className="font-semibold text-white">통신판매업신고</span> {COMPANY_INFO.mailOrderSalesNumber}
+                </p>
+                <p>
+                  <span className="font-semibold text-white">주소</span> {COMPANY_INFO.address}
+                </p>
+                <p>
+                  <span className="font-semibold text-white">전화</span> {COMPANY_INFO.phone}
+                </p>
+                <p>
+                  <span className="font-semibold text-white">이메일</span> {COMPANY_INFO.email}
+                </p>
               </div>
 
               {/* 회사 소개서 다운로드 버튼 */}

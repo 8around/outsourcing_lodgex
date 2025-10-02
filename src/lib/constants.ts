@@ -5,11 +5,14 @@ export const COMPANY_INFO = {
   fullName: 'Lodgex 호텔 위탁운영 & 컨설팅',
   description:
     '프리미엄 호텔 위탁운영 및 전문 컨설팅 서비스를 통해 호텔의 가치를 극대화합니다.',
-  ceo: '홍길동',
-  businessNumber: '123-45-67890',
-  phone: '02-1234-5678',
-  email: 'info@lodgex.co.kr',
-  address: '서울특별시 강남구 테헤란로 123, 456빌딩 7층',
+  philosophy:
+    '최고 수준의 호스피탈리티로 고객의 성공을 지원하며, 혁신적인 솔루션을 통해 숙박업의 새로운 기준을 제시합니다.',
+  ceo: '이대성',
+  businessNumber: '220-88-73309',
+  mailOrderSalesNumber: '서울강남-00430',
+  phone: '080-727-8899',
+  email: 'sjds77@naver.com',
+  address: '서울특별시 송파구 송파대로 28길 13, 거북이빌딩 3층',
   established: '2020',
 } as const;
 
@@ -203,12 +206,39 @@ export const SERVICE_CATEGORIES = {
       },
     ],
   },
+  EVALUATION_CONSULTING: {
+    id: 'evaluation_consulting',
+    title: '호텔등급심사 준비 컨설팅',
+    description:
+      '호텔 등급심사 준비를 위한 전문 컨설팅으로 심사 기준 충족과 성공적인 등급 획득을 지원합니다.',
+    icon: '⭐',
+    services: [
+      {
+        title: '등급별 심사 기준 전문 컨설팅',
+        description:
+          '호텔 등급별 심사 기준에 따른 유경험 전문 컨설턴트 방문 컨설팅',
+      },
+      {
+        title: '모의심사 시뮬레이션',
+        description:
+          '체크리스트 및 모의심사 시뮬레이션 기반 컨설팅',
+      },
+      {
+        title: '심사 대응 매뉴얼 및 교육',
+        description:
+          '심사 대응 매뉴얼 및 현장 교육 프로그램 제공',
+      },
+    ],
+  },
 } as const;
 
 export const CONSULTING_SERVICE_OPTIONS = [
-  '조직 진단',
-  '매뉴얼 구축',
-  'KPI 관리',
-  '서비스 표준화',
-  '기타',
+  '숙박업 개발',
+  '숙박업 오픈 준비 및 운영 마스터 플랜',
+  '숙박업 위탁운영',
+  '숙박업 경영컨설팅',
+  '호텔등급심사 준비 컨설팅',
+  '직무 운영 매뉴얼·조직 컨설팅',
+  '교육훈련',
+  '웨딩 개발',
 ] as const;

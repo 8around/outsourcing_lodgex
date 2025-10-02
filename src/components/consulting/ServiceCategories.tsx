@@ -26,7 +26,7 @@ export function ServiceCategories({
         {/* Header */}
         <div className="text-center mb-12">
           <h2 className="text-3xl font-sans font-bold text-primary mb-4">
-            사업 영역
+            사업분야
           </h2>
           <p className="text-lg text-neutral-600 max-w-3xl mx-auto">
             숙박업(관광호텔, 중소형호텔, 리조트, 일반호텔) 운영의 모든 영역에서<br />
