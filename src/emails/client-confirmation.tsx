@@ -31,7 +31,7 @@ export default function ClientConfirmationEmail({
       <Body style={main}>
         <Container style={container}>
           <Section style={headerSection}>
-            <Heading style={h1}>LodgeX</Heading>
+            <Heading style={h1}>Lodgense</Heading>
             <Text style={headerSubtitle}>호텔 위탁운영 & 컨설팅</Text>
           </Section>
 
@@ -43,7 +43,7 @@ export default function ClientConfirmationEmail({
             </Heading>
             
             <Text style={text}>
-              LodgeX 호텔 컨설팅 서비스에 신청해 주셔서 감사합니다.
+              Lodgense 호텔 컨설팅 서비스에 신청해 주셔서 감사합니다.
             </Text>
 
             <Text style={text}>
@@ -115,7 +115,7 @@ export default function ClientConfirmationEmail({
               </Text>
 
               <Text style={contactInfo}>
-                <strong>이메일:</strong> contact@lodgex.com<br />
+                <strong>이메일:</strong> contact@lodgense.com<br />
                 <strong>전화:</strong> 02-1234-5678<br />
                 <strong>운영시간:</strong> 평일 09:00 - 18:00
               </Text>
@@ -125,12 +125,12 @@ export default function ClientConfirmationEmail({
 
             <Section style={footerSection}>
               <Text style={footerText}>
-                LodgeX 호텔 컨설팅 서비스를 선택해 주셔서 감사합니다.<br />
+                Lodgense 호텔 컨설팅 서비스를 선택해 주셔서 감사합니다.<br />
                 호텔 운영의 새로운 가능성을 함께 만들어 나가겠습니다.
               </Text>
               
               <Text style={signature}>
-                LodgeX 컨설팅팀 드림
+                Lodgense 컨설팅팀 드림
               </Text>
             </Section>
           </Section>

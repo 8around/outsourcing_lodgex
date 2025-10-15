@@ -10,8 +10,8 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Lodgex - 숙박업 위탁운영 & 컨설팅',
-    template: '%s | Lodgex',
+    default: 'Lodgense - 숙박업 위탁운영 & 컨설팅',
+    template: '%s | Lodgense',
   },
   description:
     '숙박업 위탁운영 및 전문 컨설팅 서비스를 통해 숙박업의 가치를 극대화합니다.',
@@ -22,20 +22,20 @@ export const metadata: Metadata = {
     '숙박업 경영',
     '숙박업 컨설팅',
   ],
-  authors: [{ name: 'Lodgex' }],
-  creator: 'Lodgex',
+  authors: [{ name: 'Lodgense' }],
+  creator: 'Lodgense',
   openGraph: {
     type: 'website',
     locale: 'ko_KR',
-    url: 'https://lodgex.co.kr',
-    title: 'Lodgex - 숙박업 위탁운영 & 컨설팅',
+    url: 'https://lodgense.com',
+    title: 'Lodgense - 숙박업 위탁운영 & 컨설팅',
     description:
       '숙박업 위탁운영 및 전문 컨설팅 서비스를 통해 숙박업의 가치를 극대화합니다.',
-    siteName: 'Lodgex',
+    siteName: 'Lodgense',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Lodgex - 숙박업 위탁운영 & 컨설팅',
+    title: 'Lodgense - 숙박업 위탁운영 & 컨설팅',
     description:
       '숙박업 위탁운영 및 전문 컨설팅 서비스를 통해 숙박업의 가치를 극대화합니다.',
   },
@@ -73,7 +73,7 @@ export default function RootLayout({
         {/* Apple specific meta tags */}
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="Lodgex" />
+        <meta name="apple-mobile-web-app-title" content="Lodgense" />
         {/* Microsoft specific meta tags */}
         <meta name="msapplication-TileColor" content="#1C2A44" />
         <meta name="msapplication-config" content="none" />

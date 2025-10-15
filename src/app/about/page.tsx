@@ -7,9 +7,9 @@ import { OrganizationChart } from '../../components/about/OrganizationChart';
 
 export const metadata: Metadata = {
   title: '회사 소개',
-  description: 'Lodgex는 숙박업·호텔 운영 전문성과 디지털 혁신을 바탕으로 차별화된 솔루션을 제공합니다. 대표자 인사말과 조직 구조를 통해 Lodgex의 비전과 전문성을 확인하세요.',
+  description: 'Lodgense는 숙박업·호텔 운영 전문성과 디지털 혁신을 바탕으로 차별화된 솔루션을 제공합니다. 대표자 인사말과 조직 구조를 통해 Lodgense의 비전과 전문성을 확인하세요.',
   keywords: [
-    'Lodgex 회사소개',
+    'Lodgense 회사소개',
     '숙박업 전문가',
     '호텔 운영 전문성',
     '디지털 혁신',
@@ -20,20 +20,20 @@ export const metadata: Metadata = {
     '조직도'
   ],
   openGraph: {
-    title: '회사 소개 | Lodgex',
-    description: 'Lodgex는 숙박업·호텔 운영 전문성과 디지털 혁신을 바탕으로 차별화된 솔루션을 제공합니다.',
-    url: 'https://lodgex.co.kr/about',
+    title: '회사 소개 | Lodgense',
+    description: 'Lodgense는 숙박업·호텔 운영 전문성과 디지털 혁신을 바탕으로 차별화된 솔루션을 제공합니다.',
+    url: 'https://lodgense.com/about',
     type: 'website',
     locale: 'ko_KR',
-    siteName: 'Lodgex',
+    siteName: 'Lodgense',
   },
   twitter: {
     card: 'summary_large_image',
-    title: '회사 소개 | Lodgex',
-    description: 'Lodgex는 숙박업·호텔 운영 전문성과 디지털 혁신을 바탕으로 차별화된 솔루션을 제공합니다.',
+    title: '회사 소개 | Lodgense',
+    description: 'Lodgense는 숙박업·호텔 운영 전문성과 디지털 혁신을 바탕으로 차별화된 솔루션을 제공합니다.',
   },
   alternates: {
-    canonical: 'https://lodgex.co.kr/about',
+    canonical: 'https://lodgense.com/about',
   },
 };
 
@@ -54,7 +54,7 @@ export default function AboutPage() {
                 회사 소개
               </h1>
               <p className="text-xl md:text-2xl text-white/95 mb-8 leading-relaxed drop-shadow">
-                Lodgex는 숙박업·호텔 운영 전문성과 디지털 혁신을 바탕으로 
+                Lodgense는 숙박업·호텔 운영 전문성과 디지털 혁신을 바탕으로 
                 차별화된 솔루션을 제공합니다.
               </p>
             </div>

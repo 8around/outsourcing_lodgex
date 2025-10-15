@@ -48,9 +48,9 @@ export async function sendAdminNotification(
     );
 
     const { data: result, error } = await resend.emails.send({
-      from: "noreply@lodgex.co.kr",
+      from: "noreply@lodgense.com",
       to: adminEmails,
-      subject: `[LodgeX] 새로운 컨설팅 신청 - ${data.companyName}`,
+      subject: `[Lodgense] 새로운 컨설팅 신청 - ${data.companyName}`,
       html: emailHtml,
       replyTo: data.contactEmail,
     });
@@ -96,7 +96,7 @@ export async function sendClientConfirmation(
     const { data: result, error } = await resend.emails.send({
       from: "delivered@resend.dev",
       to: data.contactEmail,
-      subject: "[LodgeX] 컨설팅 신청이 접수되었습니다",
+      subject: "[Lodgense] 컨설팅 신청이 접수되었습니다",
       html: emailHtml,
     });
 

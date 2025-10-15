@@ -1,8 +1,8 @@
 // Application Constants
 
 export const COMPANY_INFO = {
-  name: 'Lodgex',
-  fullName: 'Lodgex 호텔 위탁운영 & 컨설팅',
+  name: 'Lodgense',
+  fullName: 'Lodgense 호텔 위탁운영 & 컨설팅',
   description:
     '프리미엄 호텔 위탁운영 및 전문 컨설팅 서비스를 통해 호텔의 가치를 극대화합니다.',
   philosophy:
