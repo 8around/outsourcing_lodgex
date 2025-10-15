@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { TextLogo } from '@/components/common/Logo';
 
 const navigation = [
   { name: '사업분야', href: '/services' },
@@ -69,14 +70,14 @@ export function Header() {
         <div className="flex justify-between items-center h-16 md:h-20">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link 
-              href="/" 
+            <Link
+              href="/"
               className="flex items-center group min-h-touch min-w-touch rounded-lg p-1 -m-1 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
-              aria-label="Lodgex 홈으로 이동"
+              aria-label="Lodgense 홈으로 이동"
             >
-              <span className="text-xl sm:text-2xl font-sans font-bold text-primary-900 group-hover:text-primary-800 transition-colors">
-                Lodge<span className="text-gradient">x</span>
-              </span>
+              <div className="group-hover:opacity-80 transition-opacity">
+                <TextLogo variant="gradient" size="md" />
+              </div>
             </Link>
           </div>
 
