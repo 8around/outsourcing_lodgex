@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { IntroductionDownloadBtn } from '@/components/common/IntroductionDownloadBtn';
 import { COMPANY_INFO } from '@/lib/constants';
+import { TextLogo } from '@/components/common/Logo';
 
 const footerData = {
   quickLinks: [
@@ -24,9 +25,7 @@ export function Footer() {
             {/* Company Info */}
             <div className="lg:col-span-1">
               <Link href="/" className="inline-flex items-center mb-6">
-                <span className="text-3xl font-sans font-bold">
-                  Lodge<span className="text-accent-400">x</span>
-                </span>
+                <TextLogo variant="accent" size="lg" />
               </Link>
               
               <p className="text-primary-200 leading-relaxed mb-6">
@@ -91,7 +90,7 @@ export function Footer() {
         <div className="border-t border-primary-800 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-primary-300 text-center md:text-left">
-              <p>© 2025 Lodgex. All rights reserved.</p>
+              <p>© 2025 Lodgense. All rights reserved.</p>
             </div>
           </div>
         </div>

@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     '브랜드 포지셔닝',
   ],
   openGraph: {
-    title: '서비스 - Lodgex 호텔 위탁운영 & 컨설팅',
+    title: '서비스 - Lodgense 호텔 위탁운영 & 컨설팅',
     description:
       '전문적인 호텔 위탁운영 서비스와 맞춤형 컨설팅으로 호텔의 가치를 극대화합니다.',
   },

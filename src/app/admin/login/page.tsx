@@ -1,8 +1,8 @@
 import LoginForm from '@/components/admin/login-form';
 
 export const metadata = {
-  title: 'LODGEX - 관리자 로그인',
-  description: 'LODGEX 숙박업 관리 시스템 관리자 로그인 페이지',
+  title: 'LODGENSE - 관리자 로그인',
+  description: 'LODGENSE 숙박업 관리 시스템 관리자 로그인 페이지',
 };
 
 export default function AdminLoginPage() {
@@ -34,7 +34,7 @@ export default function AdminLoginPage() {
           <div className="space-y-4">
             <h1 className="text-5xl font-bold text-white mb-3 tracking-tight font-serif">
               <span className="bg-gradient-to-r from-white via-[#F4F4F6] to-white bg-clip-text text-transparent">
-                LODGEX
+                LODGENSE
               </span>
             </h1>
             
@@ -125,7 +125,7 @@ export default function AdminLoginPage() {
         </div>
         
         <p className="text-sm text-white/60 font-medium">
-          © 2025 Lodgex. All rights reserved.
+          © 2025 Lodgense. All rights reserved.
         </p>
       </div>
     </>

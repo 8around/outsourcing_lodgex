@@ -42,7 +42,7 @@ export function OrganizationChart() {
             </h2>
             <div className="w-24 h-1 bg-accent-500 mx-auto mb-6"></div>
             <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
-              Lodgex의 전문적이고 체계적인 조직 구조를 통해 최고의 서비스를
+              Lodgense의 전문적이고 체계적인 조직 구조를 통해 최고의 서비스를
               제공합니다.
             </p>
           </div>
@@ -57,7 +57,7 @@ export function OrganizationChart() {
               <div className="relative w-full">
                 <Image
                   src={organizationImageUrl}
-                  alt="Lodgex 조직도 - 회사의 체계적인 조직 구조를 보여주는 차트"
+                  alt="Lodgense 조직도 - 회사의 체계적인 조직 구조를 보여주는 차트"
                   width={1200}
                   height={800}
                   className="w-full h-auto"

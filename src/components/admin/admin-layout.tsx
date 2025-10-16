@@ -62,7 +62,7 @@ export default function AdminLayout({ children, adminInfo }: AdminLayoutProps) {
       ),
     },
     {
-      name: '이벤트 관리',
+      name: '교육·숙박업 운영정보 관리',
       href: '/admin/events',
       icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -106,7 +106,7 @@ export default function AdminLayout({ children, adminInfo }: AdminLayoutProps) {
         <div className="flex items-center justify-between h-16 px-4 border-b border-gray-800">
           <div className={`flex items-center ${isSidebarOpen ? '' : 'justify-center'}`}>
             {isSidebarOpen ? (
-              <h1 className="text-xl font-bold text-white">LodgeX Admin</h1>
+              <h1 className="text-xl font-bold text-white">Lodgense Admin</h1>
             ) : (
               <div className="w-8 h-8 bg-[#1C2A44] rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">L</span>
@@ -208,7 +208,7 @@ export default function AdminLayout({ children, adminInfo }: AdminLayoutProps) {
               <div>
                 <h2 className="text-2xl font-bold text-white">관리자 콘솔</h2>
                 <p className="text-sm text-gray-400 mt-1">
-                  LodgeX 호텔 컨설팅 서비스 관리 시스템
+                  Lodgense 호텔 컨설팅 서비스 관리 시스템
                 </p>
               </div>
               <div className="flex items-center space-x-4">
