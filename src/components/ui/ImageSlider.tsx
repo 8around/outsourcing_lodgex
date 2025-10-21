@@ -72,6 +72,7 @@ export function ImageSlider({
               fill
               className="object-cover"
               priority={item.id === items[0].id}
+              unoptimized
             />
             {/* Text Overlay - Removed to prevent duplicate text */}
           </div>
