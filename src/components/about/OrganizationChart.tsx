@@ -66,7 +66,7 @@ export function OrganizationChart() {
                     height: "auto",
                   }}
                   priority={false}
-                  quality={90}
+                  unoptimized
                   onError={() => setImageError(true)}
                 />
               </div>
