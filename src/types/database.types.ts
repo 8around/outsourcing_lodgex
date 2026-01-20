@@ -268,6 +268,19 @@ export type Database = {
       }
       increment_view_count: { Args: { post_id: string }; Returns: undefined }
       is_admin: { Args: never; Returns: boolean }
+      search_posts: {
+        Args: {
+          p_category_id?: string
+          p_is_published?: boolean
+          p_limit?: number
+          p_offset?: number
+          p_post_type?: string
+          p_search?: string
+          p_sort_by?: string
+          p_sort_direction?: string
+        }
+        Returns: Json
+      }
       verify_admin_password: {
         Args: { admin_login_id: string; admin_password: string }
         Returns: boolean
