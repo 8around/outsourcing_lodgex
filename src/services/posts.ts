@@ -53,11 +53,11 @@ export class FrontendPostsService {
         }
       )
 
-      // BoardPost 형태로 변환
+      // BoardPost 형태로 변환 (목록에서는 content 불필요)
       const posts: BoardPost[] = response.data.map(post => ({
         id: post.id,
         title: post.title,
-        content: post.content,
+        content: '', // 목록에서는 content 불필요 (상세 조회에서만 로드)
         excerpt: post.excerpt || '',
         author: 'Lodgense Hotel',
         date: post.date.split('T')[0], // YYYY-MM-DD 형태로 변환
