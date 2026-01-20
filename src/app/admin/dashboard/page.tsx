@@ -15,17 +15,17 @@ export default async function AdminDashboard() {
       .from('posts')
       .select('*', { count: 'exact', head: true })
       .eq('post_type', 'insights')
-      .eq('status', 'published'),
+      .eq('is_published', true),
     supabase
       .from('posts')
       .select('*', { count: 'exact', head: true })
       .eq('post_type', 'events')
-      .eq('status', 'published'),
+      .eq('is_published', true),
     /* supabase
       .from('posts')
       .select('*', { count: 'exact', head: true })
       .eq('post_type', 'testimonials')
-      .eq('status', 'published'), */
+      .eq('is_published', true), */
     supabase
       .from('service_requests')
       .select('*', { count: 'exact', head: true })

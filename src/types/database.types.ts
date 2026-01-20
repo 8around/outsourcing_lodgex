@@ -7,10 +7,30 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instantiate createClient with right options
-  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
-  __InternalSupabase: {
-    PostgrestVersion: "13.0.4"
+  graphql_public: {
+    Tables: {
+      [_ in never]: never
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      graphql: {
+        Args: {
+          extensions?: Json
+          operationName?: string
+          query?: string
+          variables?: Json
+        }
+        Returns: Json
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
   }
   public: {
     Tables: {
@@ -113,9 +133,9 @@ export type Database = {
           excerpt: string | null
           id: string
           image_url: string | null
+          is_published: boolean
           post_type: string
           rating: number | null
-          status: string | null
           tags: string[] | null
           title: string
           updated_at: string | null
@@ -132,9 +152,9 @@ export type Database = {
           excerpt?: string | null
           id?: string
           image_url?: string | null
+          is_published?: boolean
           post_type: string
           rating?: number | null
-          status?: string | null
           tags?: string[] | null
           title: string
           updated_at?: string | null
@@ -151,9 +171,9 @@ export type Database = {
           excerpt?: string | null
           id?: string
           image_url?: string | null
+          is_published?: boolean
           post_type?: string
           rating?: number | null
-          status?: string | null
           tags?: string[] | null
           title?: string
           updated_at?: string | null
@@ -237,14 +257,17 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      increment_view_count: {
-        Args: { post_id: string }
-        Returns: undefined
+      get_categories_with_counts: {
+        Args: { p_post_type: string }
+        Returns: {
+          display_order: number
+          id: string
+          name: string
+          post_count: number
+        }[]
       }
-      is_admin: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
+      increment_view_count: { Args: { post_id: string }; Returns: undefined }
+      is_admin: { Args: never; Returns: boolean }
       verify_admin_password: {
         Args: { admin_login_id: string; admin_password: string }
         Returns: boolean
@@ -377,7 +400,11 @@ export type CompositeTypes<
     : never
 
 export const Constants = {
+  graphql_public: {
+    Enums: {},
+  },
   public: {
     Enums: {},
   },
 } as const
+

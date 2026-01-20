@@ -24,7 +24,7 @@ interface PostFormData {
   tags: string[]
   author: string
   author_title: string
-  status: string
+  is_published: boolean
   meta_title: string
   meta_description: string
   date: string
@@ -61,7 +61,7 @@ export default function PostEditor({
     tags: [] as string[],
     author: '',
     author_title: '',
-    status: 'draft',
+    is_published: false,
     meta_title: '',
     meta_description: '',
     date: new Date().toISOString().split('T')[0], // 항상 기본값으로 오늘 날짜 설정
@@ -161,7 +161,7 @@ export default function PostEditor({
     }
   }
 
-  const handleSubmit = async (status: string) => {
+  const handleSubmit = async (is_published: boolean) => {
     try {
       // PostEditor handleSubmit 시작
       
@@ -209,7 +209,7 @@ export default function PostEditor({
       
       const submitData = {
         ...formData,
-        status,
+        is_published,
         date: dateValue,  // 검증된 ISO 8601 형식으로 전송
         post_type: postType,
         image_url: imageUrl  // 업로드된 이미지 URL 사용
@@ -544,7 +544,7 @@ export default function PostEditor({
         </button>
         <button
           type="button"
-          onClick={() => handleSubmit('draft')}
+          onClick={() => handleSubmit(false)}
           disabled={loading}
           className="px-6 py-2 text-gray-300 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors disabled:opacity-50"
         >
@@ -552,7 +552,7 @@ export default function PostEditor({
         </button>
         <button
           type="button"
-          onClick={() => handleSubmit('published')}
+          onClick={() => handleSubmit(true)}
           disabled={loading}
           className="px-6 py-2 text-black bg-[#D4B98B] rounded-lg hover:bg-[#D4B98B]/80 transition-colors disabled:opacity-50"
         >

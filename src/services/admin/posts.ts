@@ -10,7 +10,7 @@ export interface Post {
   category_id?: string | null;
   tags?: string[] | null;
   date: string;
-  status: "draft" | "published";
+  is_published: boolean;
   views: number;
 
   // 고객 후기 전용 필드
@@ -40,7 +40,7 @@ export interface Category {
 
 export interface PostFilters {
   post_type?: "insights" | "events" | "testimonials";
-  status?: string;
+  is_published?: boolean;
   category_id?: string;
   search?: string;
 }
@@ -86,20 +86,16 @@ export class PostsService {
         query = query.eq("post_type", filters.post_type);
       }
 
-      if (filters.status) {
-        query = query.eq("status", filters.status);
+      if (filters.is_published !== undefined) {
+        query = query.eq("is_published", filters.is_published);
       }
 
       if (filters.category_id) {
         query = query.eq("category_id", filters.category_id);
       }
 
-      // 검색 시 전체 데이터를 가져와서 클라이언트에서 필터링
-      let shouldFilterClient = false;
+      // 검색 필터 (제목, 내용, excerpt - DB 레벨)
       if (filters.search) {
-        // 태그 검색을 위해 모든 데이터를 가져옴
-        shouldFilterClient = true;
-        // DB에서 기본 검색 (제목, 내용, excerpt)
         query = query.or(
           `title.ilike.%${filters.search}%,content.ilike.%${filters.search}%,excerpt.ilike.%${filters.search}%`
         );
@@ -110,85 +106,47 @@ export class PostsService {
       const sortDirection = pagination.sort_direction || "desc";
       query = query.order(sortBy, { ascending: sortDirection === "asc" });
 
-      // 검색 시 페이지네이션 없이 전체 데이터 가져오기
-      let data, error;
-      if (shouldFilterClient) {
-        // 검색 시 전체 데이터 가져오기
-        const result = await query;
-        data = result.data;
-        error = result.error;
-      } else {
-        // 일반 조회 시 페이지네이션 적용
-        const result = await query.range(
-          (pagination.page - 1) * pagination.per_page,
-          pagination.page * pagination.per_page - 1
-        );
-        data = result.data;
-        error = result.error;
-      }
+      // 페이지네이션 적용 (항상 서버에서 처리)
+      const { data, error } = await query.range(
+        (pagination.page - 1) * pagination.per_page,
+        pagination.page * pagination.per_page - 1
+      );
 
       if (error) throw error;
       if (!data) throw new Error("No data returned");
 
       // 카테고리 이름 매핑
-      let postsWithCategory = data.map((post) => ({
+      const postsWithCategory = data.map((post) => ({
         ...post,
         category_name: post.categories?.name || null,
       }));
 
-      // 태그 검색 필터링 (클라이언트 사이드)
-      if (filters.search && shouldFilterClient) {
-        const searchLower = filters.search.toLowerCase();
-        // 모든 필드에서 검색
-        postsWithCategory = postsWithCategory.filter((post) => {
-          const titleMatch = post.title?.toLowerCase().includes(searchLower);
-          const contentMatch = post.content
-            ?.toLowerCase()
-            .includes(searchLower);
-          const excerptMatch = post.excerpt
-            ?.toLowerCase()
-            .includes(searchLower);
-          const tagsMatch = post.tags?.some((tag) =>
-            tag.toLowerCase().includes(searchLower)
-          );
+      // 총 개수 조회
+      const countQuery = this.getClient()
+        .from("posts")
+        .select("*", { count: "exact", head: true });
 
-          return titleMatch || contentMatch || excerptMatch || tagsMatch;
-        });
+      if (filters.post_type) {
+        countQuery.eq("post_type", filters.post_type);
+      }
+      if (filters.is_published !== undefined) {
+        countQuery.eq("is_published", filters.is_published);
+      }
+      if (filters.category_id) {
+        countQuery.eq("category_id", filters.category_id);
+      }
+      if (filters.search) {
+        countQuery.or(
+          `title.ilike.%${filters.search}%,content.ilike.%${filters.search}%,excerpt.ilike.%${filters.search}%`
+        );
       }
 
-      // 클라이언트 필터링 후 페이지네이션 적용
-      let paginatedData = postsWithCategory;
-      let total = postsWithCategory.length;
-
-      if (shouldFilterClient) {
-        // 클라이언트에서 페이지네이션
-        const start = (pagination.page - 1) * pagination.per_page;
-        const end = start + pagination.per_page;
-        paginatedData = postsWithCategory.slice(start, end);
-        total = postsWithCategory.length;
-      } else {
-        // 서버 페이지네이션 시 총 개수 조회
-        const countQuery = this.getClient()
-          .from("posts")
-          .select("*", { count: "exact", head: true });
-
-        if (filters.post_type) {
-          countQuery.eq("post_type", filters.post_type);
-        }
-        if (filters.status) {
-          countQuery.eq("status", filters.status);
-        }
-        if (filters.category_id) {
-          countQuery.eq("category_id", filters.category_id);
-        }
-
-        const { count, error: countError } = await countQuery;
-        if (countError) throw countError;
-        total = count || 0;
-      }
+      const { count, error: countError } = await countQuery;
+      if (countError) throw countError;
+      const total = count || 0;
 
       return {
-        data: paginatedData as Post[],
+        data: postsWithCategory as Post[],
         total: total,
         page: pagination.page,
         per_page: pagination.per_page,
@@ -429,7 +387,7 @@ export class PostsService {
   // 게시글 통계
   async getPostStats(postType?: "insights" | "events" | "testimonials") {
     try {
-      let query = this.getClient().from("posts").select("status, views");
+      let query = this.getClient().from("posts").select("is_published, views");
 
       if (postType) {
         query = query.eq("post_type", postType);
@@ -441,8 +399,8 @@ export class PostsService {
 
       const stats = {
         total: data.length,
-        published: data.filter((p) => p.status === "published").length,
-        draft: data.filter((p) => p.status === "draft").length,
+        published: data.filter((p) => p.is_published).length,
+        draft: data.filter((p) => !p.is_published).length,
         totalViews: data.reduce((sum, p) => sum + (p.views || 0), 0),
       };
 
@@ -472,7 +430,7 @@ export class PostsService {
         `
         )
         .eq("post_type", postType)
-        .eq("status", "published")
+        .eq("is_published", true)
         .order("date", { ascending: false })
         .limit(limit);
 
@@ -514,7 +472,7 @@ export class PostsService {
         `
         )
         .eq("post_type", postType)
-        .eq("status", "published")
+        .eq("is_published", true)
         .neq("id", postId)
         .order("date", { ascending: false })
         .limit(limit);
@@ -549,7 +507,7 @@ export class PostsService {
           `
           )
           .eq("post_type", postType)
-          .eq("status", "published")
+          .eq("is_published", true)
           .neq("id", postId)
           .order("date", { ascending: false })
           .limit(limit - postsWithCategory.length);
