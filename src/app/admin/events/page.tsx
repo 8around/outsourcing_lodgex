@@ -93,10 +93,19 @@ export default function EventsPage() {
     }
   };
 
-  // 게시글 편집
-  const handleEdit = (post: Post) => {
-    setEditingPost(post);
-    setShowCreateModal(true);
+  // 게시글 편집 (content 포함 전체 데이터 조회)
+  const handleEdit = async (post: Post) => {
+    try {
+      const fullPost = await postsService.getPost(post.id);
+
+      if (fullPost) {
+        setEditingPost(fullPost);
+        setShowCreateModal(true);
+      }
+    } catch (error) {
+      console.error('게시글 조회 실패:', error);
+      alert('게시글을 불러오는데 실패했습니다.');
+    }
   };
 
   // 모달 닫기
@@ -189,7 +198,7 @@ export default function EventsPage() {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <input
                   type="text"
-                  placeholder="제목, 내용, 작성자로 검색..."
+                  placeholder="제목, 요약, 태그"
                   value={searchInput}
                   onChange={(e) => setSearchInput(e.target.value)}
                   onKeyPress={handleSearchKeyPress}

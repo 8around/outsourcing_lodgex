@@ -60,6 +60,30 @@ export interface PostsResponse {
   total_pages: number;
 }
 
+// search_posts RPC 함수 응답 타입 (RETURNS JSON이므로 수동 정의)
+interface SearchPostsRpcResponse {
+  data: Array<{
+    id: string;
+    title: string;
+    excerpt: string | null;
+    image_url: string | null;
+    post_type: string;
+    category_id: string | null;
+    tags: string[] | null;
+    date: string;
+    is_published: boolean;
+    views: number;
+    client_name: string | null;
+    client_company: string | null;
+    client_position: string | null;
+    rating: number | null;
+    created_at: string;
+    updated_at: string;
+    category_name: string | null;
+  }>;
+  total: number;
+}
+
 export class PostsService {
   private getClient() {
     return createClient();
@@ -71,86 +95,35 @@ export class PostsService {
     pagination: PaginationOptions = { page: 1, per_page: 10 }
   ): Promise<PostsResponse> {
     try {
-      let query = this.getClient().from("posts").select(`
-          *,
-          categories (
-            id,
-            name,
-            post_type,
-            display_order
-          )
-        `);
-
-      // 필터 적용
-      if (filters.post_type) {
-        query = query.eq("post_type", filters.post_type);
-      }
-
-      if (filters.is_published !== undefined) {
-        query = query.eq("is_published", filters.is_published);
-      }
-
-      if (filters.category_id) {
-        query = query.eq("category_id", filters.category_id);
-      }
-
-      // 검색 필터 (제목, 내용, excerpt - DB 레벨)
-      if (filters.search) {
-        query = query.or(
-          `title.ilike.%${filters.search}%,content.ilike.%${filters.search}%,excerpt.ilike.%${filters.search}%`
-        );
-      }
-
-      // 정렬
-      const sortBy = pagination.sort_by || "date";
-      const sortDirection = pagination.sort_direction || "desc";
-      query = query.order(sortBy, { ascending: sortDirection === "asc" });
-
-      // 페이지네이션 적용 (항상 서버에서 처리)
-      const { data, error } = await query.range(
-        (pagination.page - 1) * pagination.per_page,
-        pagination.page * pagination.per_page - 1
-      );
+      // RPC 함수를 사용하여 title, excerpt, tags 통합 검색
+      const { data, error } = await this.getClient().rpc('search_posts', {
+        p_search: filters.search || undefined,
+        p_post_type: filters.post_type || undefined,
+        p_is_published: filters.is_published ?? undefined,
+        p_category_id: filters.category_id || undefined,
+        p_limit: pagination.per_page,
+        p_offset: (pagination.page - 1) * pagination.per_page,
+        p_sort_by: pagination.sort_by || 'date',
+        p_sort_direction: pagination.sort_direction || 'desc'
+      });
 
       if (error) throw error;
-      if (!data) throw new Error("No data returned");
 
-      // 카테고리 이름 매핑
-      const postsWithCategory = data.map((post) => ({
+      // 타입 캐스팅 (RPC 함수가 JSON을 반환하므로)
+      const rpcData = data as unknown as SearchPostsRpcResponse;
+
+      // 목록에서는 content 불필요
+      const postsWithCategory = (rpcData?.data || []).map((post) => ({
         ...post,
-        category_name: post.categories?.name || null,
+        content: '',
       }));
-
-      // 총 개수 조회
-      const countQuery = this.getClient()
-        .from("posts")
-        .select("*", { count: "exact", head: true });
-
-      if (filters.post_type) {
-        countQuery.eq("post_type", filters.post_type);
-      }
-      if (filters.is_published !== undefined) {
-        countQuery.eq("is_published", filters.is_published);
-      }
-      if (filters.category_id) {
-        countQuery.eq("category_id", filters.category_id);
-      }
-      if (filters.search) {
-        countQuery.or(
-          `title.ilike.%${filters.search}%,content.ilike.%${filters.search}%,excerpt.ilike.%${filters.search}%`
-        );
-      }
-
-      const { count, error: countError } = await countQuery;
-      if (countError) throw countError;
-      const total = count || 0;
 
       return {
         data: postsWithCategory as Post[],
-        total: total,
+        total: rpcData?.total || 0,
         page: pagination.page,
         per_page: pagination.per_page,
-        total_pages: Math.ceil(total / pagination.per_page),
+        total_pages: Math.ceil((rpcData?.total || 0) / pagination.per_page),
       };
     } catch (error) {
       throw error;
