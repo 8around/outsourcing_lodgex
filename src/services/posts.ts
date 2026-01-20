@@ -1,5 +1,6 @@
 import { postsService } from '@/services/admin/posts'
 import { BoardPost, BoardCategory } from '@/types'
+import { createClient } from '@/lib/supabase/client'
 
 // 프론트엔드용 게시글 서비스
 export class FrontendPostsService {
@@ -29,7 +30,7 @@ export class FrontendPostsService {
       // 필터 조건 구성
       const filters: any = {
         post_type: postType,
-        status: 'published' // 프론트엔드에서는 게시된 글만 조회
+        is_published: true // 프론트엔드에서는 게시된 글만 조회
       }
 
       if (search) {
@@ -121,41 +122,32 @@ export class FrontendPostsService {
     }
   }
 
-  // 카테고리 목록 조회 (최적화됨)
+  // 카테고리 목록 조회 (RPC 함수로 최적화)
   async getCategories(postType: 'insights' | 'events' | 'testimonials') {
     try {
-      // 카테고리 목록과 전체 게시글을 병렬로 조회
-      const [categories, allPosts] = await Promise.all([
-        postsService.getCategories(postType),
-        // 전체 게시글을 한 번에 조회 (카테고리별 개수 계산용)
-        postsService.getPosts(
-          { 
-            post_type: postType,
-            status: 'published' 
-          },
-          { page: 1, per_page: 1000 } // 충분히 큰 수로 설정하여 모든 게시글 가져오기
-        )
-      ])
+      const supabase = createClient()
 
-      // 카테고리별 게시글 수 계산
-      const categoryCountMap: { [key: string]: number } = {}
-      allPosts.data.forEach(post => {
-        if (post.category_id) {
-          categoryCountMap[post.category_id] = (categoryCountMap[post.category_id] || 0) + 1
-        }
-      })
+      // RPC 함수로 카테고리와 개수를 한 번에 조회
+      const { data: categoriesWithCounts, error } = await supabase
+        .rpc('get_categories_with_counts', { p_post_type: postType })
+
+      if (error) throw error
+
+      // 전체 개수 계산
+      const totalCount = categoriesWithCounts?.reduce(
+        (sum: number, cat: { post_count: number }) => sum + (cat.post_count || 0), 0
+      ) || 0
 
       // BoardCategory 형태로 변환
       const boardCategories: BoardCategory[] = [
-        { id: 'all', name: '전체', postCount: allPosts.total }
+        { id: 'all', name: '전체', postCount: totalCount }
       ]
 
-      // 각 카테고리에 대한 게시글 수 추가
-      for (const category of categories) {
+      for (const category of categoriesWithCounts || []) {
         boardCategories.push({
           id: category.id,
           name: category.name,
-          postCount: categoryCountMap[category.id] || 0
+          postCount: category.post_count || 0
         })
       }
 

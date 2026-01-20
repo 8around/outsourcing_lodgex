@@ -66,7 +66,7 @@ export const BoardSearch = ({
               label=""
               name="search"
               type="text"
-              placeholder="제목, 내용, 태그로 검색하세요..."
+              placeholder="제목, 내용으로 검색하세요..."
               value={localQuery}
               onChange={(e) => setLocalQuery(e.target.value)}
               onKeyPress={handleKeyPress}
