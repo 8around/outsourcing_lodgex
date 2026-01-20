@@ -29,7 +29,7 @@ export default function InsightsPage() {
       const response = await postsService.getPosts(
         {
           post_type: 'insights',
-          status: statusFilter,
+          is_published: statusFilter === '' ? undefined : statusFilter === 'published',
           category_id: categoryFilter,
           search: searchTerm
         },
@@ -293,11 +293,11 @@ export default function InsightsPage() {
                   <td className="px-6 py-4 text-sm text-gray-900">{post.views}</td>
                   <td className="px-6 py-4">
                     <span className={`px-2 py-1 text-xs font-medium rounded-full ${
-                      post.status === 'published' 
+                      post.is_published
                         ? 'bg-green-100 text-green-800'
                         : 'bg-yellow-100 text-yellow-800'
                     }`}>
-                      {post.status === 'published' ? '게시됨' : '임시저장'}
+                      {post.is_published ? '게시됨' : '임시저장'}
                     </span>
                   </td>
                   <td className="px-6 py-4 text-right text-sm font-medium">
@@ -422,7 +422,7 @@ function PostFormModal({ post, categories, onClose }: {
     image_url: string;
     category_id: string;
     tags: string[];
-    status: 'draft' | 'published';
+    is_published: boolean;
   }>({
     title: post?.title || '',
     content: post?.content || '',
@@ -430,7 +430,7 @@ function PostFormModal({ post, categories, onClose }: {
     image_url: post?.image_url || '',
     category_id: post?.category_id || '',
     tags: post?.tags || [],
-    status: (post?.status as 'draft' | 'published') || 'draft',
+    is_published: post?.is_published ?? false,
   });
   const [tagInput, setTagInput] = useState('');
   const [saving, setSaving] = useState(false);
@@ -582,8 +582,8 @@ function PostFormModal({ post, categories, onClose }: {
                 상태
               </label>
               <select
-                value={formData.status}
-                onChange={(e) => setFormData({ ...formData, status: e.target.value as 'draft' | 'published' })}
+                value={formData.is_published ? 'published' : 'draft'}
+                onChange={(e) => setFormData({ ...formData, is_published: e.target.value === 'published' })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
               >
                 <option value="draft">임시저장</option>
