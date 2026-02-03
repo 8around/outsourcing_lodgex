@@ -215,7 +215,7 @@ export default function HomePage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <Link
-                  href="/services#contact-form"
+                  href="/contact"
                   className="bg-white text-primary hover:bg-neutral-50 px-10 py-4 rounded-full font-semibold text-lg transition-colors duration-200 shadow-sm hover:shadow-md"
                   aria-label="무료 컨설팅 신청하기"
                 >
