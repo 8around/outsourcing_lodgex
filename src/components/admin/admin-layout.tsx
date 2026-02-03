@@ -105,12 +105,8 @@ export default function AdminLayout({ children, adminInfo }: AdminLayoutProps) {
       <div className={`fixed inset-y-0 left-0 z-50 ${isSidebarOpen ? 'w-64' : 'w-16'} bg-[#0f0f23] border-r border-gray-800 shadow-lg transition-all duration-300 ease-in-out`}>
         <div className="flex items-center justify-between h-16 px-4 border-b border-gray-800">
           <div className={`flex items-center ${isSidebarOpen ? '' : 'justify-center'}`}>
-            {isSidebarOpen ? (
-              <h1 className="text-xl font-bold text-white">Lodgense Admin</h1>
-            ) : (
-              <div className="w-8 h-8 bg-[#1C2A44] rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">L</span>
-              </div>
+            {isSidebarOpen && (
+              <h1 className="text-xl font-bold text-white">SoUHGM Admin</h1>
             )}
           </div>
           <button
@@ -208,7 +204,7 @@ export default function AdminLayout({ children, adminInfo }: AdminLayoutProps) {
               <div>
                 <h2 className="text-2xl font-bold text-white">관리자 콘솔</h2>
                 <p className="text-sm text-gray-400 mt-1">
-                  Lodgense 호텔 컨설팅 서비스 관리 시스템
+                  SoUHGM 호텔 컨설팅 서비스 관리 시스템
                 </p>
               </div>
               <div className="flex items-center space-x-4">

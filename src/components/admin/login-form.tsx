@@ -206,13 +206,6 @@ export default function LoginForm() {
           )}
         </div>
       </button>
-
-      {/* 접근성 안내 */}
-      <div className="mt-6 text-center">
-        <p className="text-xs text-white/60">
-          키보드로 탭(Tab)을 눌러 필드 간 이동이 가능합니다
-        </p>
-      </div>
     </form>
   );
 }

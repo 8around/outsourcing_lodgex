@@ -1,8 +1,8 @@
 import LoginForm from '@/components/admin/login-form';
 
 export const metadata = {
-  title: 'LODGENSE - 관리자 로그인',
-  description: 'LODGENSE 숙박업 관리 시스템 관리자 로그인 페이지',
+  title: 'SoUHGM - 관리자 로그인',
+  description: 'SoUHGM 숙박업 관리 시스템 관리자 로그인 페이지',
 };
 
 export default function AdminLoginPage() {
@@ -34,7 +34,7 @@ export default function AdminLoginPage() {
           <div className="space-y-4">
             <h1 className="text-5xl font-bold text-white mb-3 tracking-tight font-serif">
               <span className="bg-gradient-to-r from-white via-[#F4F4F6] to-white bg-clip-text text-transparent">
-                LODGENSE
+                SoUHGM
               </span>
             </h1>
             
@@ -45,15 +45,6 @@ export default function AdminLoginPage() {
               <div className="w-16 h-0.5 bg-gradient-to-r from-[#D4B98B] to-[#C9A96E]"></div>
               <div className="w-3 h-3 bg-[#C9A96E] rounded-full shadow-lg shadow-[#C9A96E]/50"></div>
               <div className="w-8 h-0.5 bg-gradient-to-r from-[#C9A96E] to-transparent"></div>
-            </div>
-            
-            <div className="space-y-2">
-              <p className="text-[#D4B98B] text-lg font-semibold tracking-wide">
-                Lodgement Management System
-              </p>
-              <p className="text-white/70 text-sm font-medium">
-                전문가와 함께하는 숙박업 운영 솔루션
-              </p>
             </div>
           </div>
         </div>
@@ -83,36 +74,7 @@ export default function AdminLoginPage() {
             </div>
 
             {/* 로그인 폼 */}
-            <LoginForm />
-
-            {/* 추가 옵션들 */}
-            <div className="mt-8">
-              {/* 보안 안내 */}
-              <div className="p-6 bg-gradient-to-r from-[#D4B98B]/10 via-[#D4B98B]/5 to-transparent 
-                            border border-[#D4B98B]/20 rounded-2xl backdrop-blur-sm">
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 mt-1">
-                    <div className="w-8 h-8 bg-[#D4B98B]/20 rounded-lg flex items-center justify-center">
-                      <svg className="w-4 h-4 text-[#D4B98B]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                      </svg>
-                    </div>
-                  </div>
-                  <div className="text-sm text-white/80 leading-relaxed">
-                    <p className="font-semibold text-white mb-2 text-[#D4B98B]">보안 안내</p>
-                    <p className="mb-2">
-                      안전한 시스템 관리를 위해 다음 사항을 준수해 주세요:
-                    </p>
-                    <ul className="space-y-1 text-white/70">
-                      <li>• 강력한 비밀번호 사용</li>
-                      <li>• 공용 컴퓨터 사용 시 로그아웃 필수</li>
-                      <li>• 의심스러운 접근 시도 즉시 신고</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+            <LoginForm />          </div>
         </div>
       </div>
 
@@ -125,7 +87,7 @@ export default function AdminLoginPage() {
         </div>
         
         <p className="text-sm text-white/60 font-medium">
-          © 2025 Lodgense. All rights reserved.
+          © 2025 SoUHGM. All rights reserved.
         </p>
       </div>
     </>
