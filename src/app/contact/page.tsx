@@ -13,12 +13,12 @@ export const metadata: Metadata = {
     '숙박업 전문가 연락처',
     '무료 상담',
     '컨설팅 신청',
-    'Lodgense 연락처',
+    'SoUHGM 연락처',
     '숙박업 경영 상담',
     '서비스 문의',
   ],
   openGraph: {
-    title: '문의 - Lodgense 숙박업 위탁운영 & 컨설팅',
+    title: '문의 - SoUHGM 숙박업 위탁운영 & 컨설팅',
     description:
       '숙박업 위탁운영 및 컨설팅 서비스에 대한 문의와 상담 신청을 위한 연락처 정보입니다.',
   },

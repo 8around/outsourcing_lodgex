@@ -41,7 +41,7 @@ export function PartnersSection() {
               파트너사
             </h3>
             <p className="text-lg md:text-xl text-neutral-400 max-w-2xl mx-auto leading-relaxed">
-              Lodgense와 협력하고 있는 파트너사를 소개합니다.
+              SoUHGM과 협력하고 있는 파트너사를 소개합니다.
             </p>
           </div>
 
