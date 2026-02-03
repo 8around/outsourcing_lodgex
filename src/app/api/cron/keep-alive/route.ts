@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     // Supabase 연결 유지를 위한 간단한 쿼리
