@@ -90,7 +90,7 @@ export function Footer() {
         <div className="border-t border-primary-800 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-primary-300 text-center md:text-left">
-              <p>© 2025 Lodgense. All rights reserved.</p>
+              <p>© 2025 SoUHGM. All rights reserved.</p>
             </div>
           </div>
         </div>
