@@ -41,7 +41,9 @@ export function Footer() {
                   <span className="font-semibold text-white">사업자등록증</span> {COMPANY_INFO.businessNumber} | <span className="font-semibold text-white">통신판매업신고</span> {COMPANY_INFO.mailOrderSalesNumber}
                 </p>
                 <p>
-                  <span className="font-semibold text-white">주소</span> {COMPANY_INFO.address}
+                  <span className="font-semibold text-white">주소</span>
+                  <p>[본점] {COMPANY_INFO.mainAddress}</p>
+                  <p>[지점] {COMPANY_INFO.subAddress}</p>
                 </p>
                 <p>
                   <span className="font-semibold text-white">전화</span> {COMPANY_INFO.phone}

@@ -1,18 +1,19 @@
 // Application Constants
 
 export const COMPANY_INFO = {
-  name: 'Lodgense',
-  fullName: 'Lodgense 호텔 위탁운영 & 컨설팅',
+  name: 'SoUHGM',
+  fullName: 'SoUHGM 호텔 위탁운영 & 컨설팅',
   description:
     '프리미엄 호텔 위탁운영 및 전문 컨설팅 서비스를 통해 호텔의 가치를 극대화합니다.',
   philosophy:
     '최고 수준의 호스피탈리티로 고객의 성공을 지원하며, 혁신적인 솔루션을 통해 숙박업의 새로운 기준을 제시합니다.',
-  ceo: '이대성',
+  ceo: '전조아',
   businessNumber: '220-88-73309',
   mailOrderSalesNumber: '서울강남-00430',
   phone: '080-727-8899',
   email: 'sjds77@naver.com',
-  address: '서울특별시 송파구 송파대로 28길 13, 거북이빌딩 3층',
+  mainAddress: '부산광역시 동구 중앙대로 236번길 9, 12층',
+  subAddress: '서울특별시 광진구 능동로 341, 은성빌딩 3층',
   established: '2020',
 } as const;
 
