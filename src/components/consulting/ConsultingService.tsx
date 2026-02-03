@@ -73,7 +73,7 @@ export function ConsultingService({ className }: ConsultingServiceProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-sans font-bold text-primary mb-4">
-              왜 Lodgense를 선택해야 할까요?
+              고객만족에서 자산가치까지, 당신의 호텔을 함께 만들어 갑니다.
             </h2>
             <p className="text-lg text-neutral-600 max-w-3xl mx-auto">
               숙박업(관광호텔, 중소형호텔, 리조트, 일반호텔) 업계 전문가들의 풍부한 경험과 체계적인 접근법,<br />

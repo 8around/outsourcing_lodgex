@@ -1,7 +1,6 @@
 import { Resend } from "resend";
 import { render } from "@react-email/components";
 import AdminNotificationEmail from "@/emails/admin-notification";
-import ClientConfirmationEmail from "@/emails/client-confirmation";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -48,56 +47,11 @@ export async function sendAdminNotification(
     );
 
     const { data: result, error } = await resend.emails.send({
-      from: "noreply@lodgense.com",
+      from: "noreply@souhgm.com",
       to: adminEmails,
-      subject: `[Lodgense] 새로운 컨설팅 신청 - ${data.companyName}`,
+      subject: `[SoUHGM] 새로운 컨설팅 신청 - ${data.companyName}`,
       html: emailHtml,
       replyTo: data.contactEmail,
-    });
-
-    if (error) {
-      return { success: false, error: error.message };
-    }
-
-    return { success: true, messageId: result?.id };
-  } catch (error) {
-    return {
-      success: false,
-      error: error instanceof Error ? error.message : "Unknown error occurred",
-    };
-  }
-}
-
-/**
- * 신청자에게 접수 확인 이메일 발송
- */
-export async function sendClientConfirmation(
-  data: ServiceRequestData
-): Promise<EmailResult> {
-  try {
-    const submittedAt = new Date().toLocaleString("ko-KR", {
-      timeZone: "Asia/Seoul",
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-
-    const emailHtml = await render(
-      ClientConfirmationEmail({
-        companyName: data.companyName,
-        contactName: data.contactName,
-        services: data.services,
-        submittedAt,
-      })
-    );
-
-    const { data: result, error } = await resend.emails.send({
-      from: "delivered@resend.dev",
-      to: data.contactEmail,
-      subject: "[Lodgense] 컨설팅 신청이 접수되었습니다",
-      html: emailHtml,
     });
 
     if (error) {

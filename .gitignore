@@ -28,6 +28,7 @@ node_modules/
 .codex
 .taskmaster/
 .next/
+.serena/
 
 .env*.local
 *.tsbuildinfo
