@@ -38,12 +38,12 @@ export function Footer() {
                   <span className="font-semibold text-white">대표</span> {COMPANY_INFO.ceo}
                 </p>
                 <p>
-                  <span className="font-semibold text-white">사업자등록증</span> {COMPANY_INFO.businessNumber} | <span className="font-semibold text-white">통신판매업신고</span> {COMPANY_INFO.mailOrderSalesNumber}
+                  <span className="font-semibold text-white">사업자등록번호</span> {COMPANY_INFO.businessNumber}
                 </p>
                 <p>
                   <span className="font-semibold text-white">주소</span>
-                  <p>[본점] {COMPANY_INFO.mainAddress}</p>
-                  <p>[지점] {COMPANY_INFO.subAddress}</p>
+                  <br/><span>[본점] {COMPANY_INFO.mainAddress}</span>
+                  <br/><span>[지점] {COMPANY_INFO.subAddress}</span>
                 </p>
                 <p>
                   <span className="font-semibold text-white">전화</span> {COMPANY_INFO.phone}
