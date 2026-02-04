@@ -8,8 +8,7 @@ export const COMPANY_INFO = {
   philosophy:
     '최고 수준의 호스피탈리티로 고객의 성공을 지원하며, 혁신적인 솔루션을 통해 숙박업의 새로운 기준을 제시합니다.',
   ceo: '전조아',
-  businessNumber: '220-88-73309',
-  mailOrderSalesNumber: '서울강남-00430',
+  businessNumber: '582-86-03895',
   phone: '080-727-8899',
   email: 'sjds77@naver.com',
   mainAddress: '부산광역시 동구 중앙대로 236번길 9, 12층',
